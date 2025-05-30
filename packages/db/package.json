@@ -1,0 +1,27 @@
+{
+  "name": "@gym/db",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/client.ts",
+    "./generated": "./src/generated/client"
+  },
+  "types": "./src/client.ts",
+  "type": "module",
+  "scripts": {
+    "db:generate": "pnpm with-env prisma migrate dev",
+    "db:migrate": "prisma migrate deploy",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "postinstall": "prisma generate",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@gym/env": "workspace:*",
+    "@prisma/client": "6.7.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.5.0",
+    "typescript": "^5.0.0"
+  }
+}
