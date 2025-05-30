@@ -13,8 +13,6 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string().url(),
-    DIRECT_DATABASE_URL: z.string().url(),
-    READ_ONLY_DIRECT_DATABASE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -37,8 +35,6 @@ export const env = createEnv({
    */
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
-    DIRECT_DATABASE_URL: process.env.DIRECT_DATABASE_URL,
-    READ_ONLY_DIRECT_DATABASE_URL: process.env.READ_ONLY_DIRECT_DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
   },
