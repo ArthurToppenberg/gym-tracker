@@ -2,8 +2,8 @@ import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { type NextRequest } from "next/server";
 
 import { env } from "@gym/env";
-import { appRouter } from "@gym/server/api/root";
-import { createTRPCContext } from "@gym/server/api/trpc";
+import { appRouter } from "@gym/trpc/api";
+import { createTRPCContext } from "@gym/trpc/api/trpc";
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -23,9 +23,9 @@ const handler = (req: NextRequest) =>
     createContext: () => createContext(req),
     onError:
       env.NODE_ENV === "development"
-        ? ({ path, error }) => {
+        ? (opts) => {
             console.error(
-              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`,
+              `❌ tRPC failed on ${opts.path ?? "<no-path>"}: ${opts.error.message}`
             );
           }
         : undefined,

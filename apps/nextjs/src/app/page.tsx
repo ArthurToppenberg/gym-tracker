@@ -1,8 +1,8 @@
 import Link from "next/link";
 
 import { LatestPost } from "@gym/app/_components/post";
-import { auth } from "@gym/server/auth";
 import { api, HydrateClient } from "@gym/trpc/server";
+import { auth } from "@gym/trpc/auth";
 
 export default async function Home() {
   const hello = await api.post.hello({ text: "from tRPC" });

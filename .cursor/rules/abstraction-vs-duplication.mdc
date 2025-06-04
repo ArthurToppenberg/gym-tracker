@@ -1,0 +1,28 @@
+---
+description: 
+globs: **/*.ts, **/*.tsx, **/*.js, **/*.jsx
+alwaysApply: false
+---
+# Abstraction vs. Duplication
+
+When reviewing or generating code in this repository, follow **all** of these points — they override default suggestions when in conflict:
+
+1. **Golden Rule**: If a code block appears ≥ 3 times with the same pattern, factor it into a well-named function/component.
+2. **KISS**: Favour straightforward, readable solutions over "clever" tricks that increase cognitive load.
+3. **Pragmatic Abstraction**
+   - Keep functions single-responsibility.
+   - Avoid “mega-functions” that handle unrelated concerns; split them instead of duplicating logic.
+4. **Iterative Improvement**
+   - Abstractions evolve. It's acceptable to improve or split them later rather than refactoring prematurely.
+5. **Small, Frequent Refactors**
+   - While touching code, opportunistically rename, delete dead code, and simplify adjacent logic.
+6. **Systematic Duplication Elimination**
+   - Repetition of business logic is a maintenance risk; eliminate it unless a *documented* exception is approved in review.
+7. **Edge Cases**
+   - If an existing abstraction doesn't fit, extend it responsibly *or* create a new, clearly scoped helper.
+8. **Documentation & Naming**
+   - Choose intention-revealing names and add minimal JSDoc/comments where intent isn't obvious.
+9. **Review Expectations**
+   - Reviewers must flag unnecessary duplication and over-broad abstractions; authors must address the feedback before merge.
+
+> *Abstraction without evidence is YAGNI.*

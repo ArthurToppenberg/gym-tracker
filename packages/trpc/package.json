@@ -1,0 +1,41 @@
+{
+  "name": "@gym/trpc",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./react": "./src/react.tsx",
+    "./auth": "./src/auth/index.ts",
+    "./api": "./src/api/root.ts",
+    "./api/trpc": "./src/api/trpc.ts"
+  },
+  "types": "./src/index.ts",
+  "type": "module",
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.7.2",
+    "@gym/db": "workspace:*",
+    "@gym/env": "workspace:*",
+    "@prisma/client": "catalog:",
+    "@tanstack/react-query": "^5.69.0",
+    "@trpc/client": "^11.0.0",
+    "@trpc/react-query": "^11.0.0",
+    "@trpc/server": "^11.1.4",
+    "bcryptjs": "3.0.2",
+    "next": "catalog:",
+    "next-auth": "5.0.0-beta.25",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "superjson": "^2.2.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@trpc/client": "^11.0.0",
+    "@trpc/react-query": "^11.0.0",
+    "@types/node": "^20.11.24",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^18.2.61",
+    "prisma": "catalog:",
+    "typescript": "^5.0.0"
+  }
+}

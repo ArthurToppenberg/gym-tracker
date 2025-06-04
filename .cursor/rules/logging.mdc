@@ -1,0 +1,40 @@
+---
+description: Winston logging standards and best practices for structured and contextual logging
+globs: **/*.ts, **/*.tsx, **/*.js, **/*.jsx
+alwaysApply: false
+---
+# Winston Logging Best Practices
+
+## Message Structure
+- Use package context prefix format `Package » Message` (e.g., "Websocket » Client connected"), so we're able to identify where the log is coming from
+- Include metadata objects with structured fields for searchability
+- Add timing information for performance-sensitive operations
+- Structure user-related logs with consistent identifiers
+- Avoid generic messages that lack context or specificity
+
+## Log Levels
+- Use `.debug()` for routine operational logs and detailed troubleshooting
+- Use `.info()` for significant business events and application lifecycle
+- Use `.warn()` for potential issues that don't interrupt operation
+- Use `.error()` for exceptions and error conditions
+- Reserve `.info()` for important application state changes
+
+## Formatting
+- Always use template literals with dynamic values (e.g., `User ${id} created`), but also add the information as metadata if relevant.
+- Format metadata as TypeScript objects: `logger.info("Message", { key: value })`
+- Maintain consistent field naming in metadata objects
+- In some cases it makes sense to include operation duration with `timeTaken` field in milliseconds
+
+## Best Practices
+- Keep user-sensitive data out of log messages (place in metadata if needed)
+- Never log passwords, tokens, or sensitive user information
+- Include request IDs for tracing requests across services
+- Log the start and completion of significant operations
+- Add contextual IDs (userId, requestId, transactionId) to related logs
+
+## Anti-patterns
+- Avoid repetitive logs that create noise (e.g., polling operations)
+- Don't log high-volume routine operations at info level
+- Never log without context prefixes
+- Avoid string concatenation for dynamic values
+- Don't use generic messages like "Processing" or "Found value"

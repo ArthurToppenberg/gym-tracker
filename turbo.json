@@ -14,7 +14,8 @@
     "dev": {
       "dependsOn": ["^build"],
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "outputLogs": "full"
     },
     "lint": {
       "outputs": [".cache/.eslintcache"]

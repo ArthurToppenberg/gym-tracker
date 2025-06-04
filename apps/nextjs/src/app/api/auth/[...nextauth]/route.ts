@@ -1,3 +1,3 @@
-import { handlers } from "@gym/server/auth";
+import { handlers } from "@gym/trpc/auth";
 
 export const { GET, POST } = handlers;
