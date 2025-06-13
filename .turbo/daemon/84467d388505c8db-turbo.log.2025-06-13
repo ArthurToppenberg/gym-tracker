@@ -333,3 +333,7 @@
 2025-06-13T22:18:28.448527Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
 2025-06-13T22:18:29.447561Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/nextjs/src/app/auth/signup/_components"), AnchoredSystemPathBuf("apps/nextjs/src/app/auth/signup/components")}
 2025-06-13T22:18:29.447571Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@gym/nextjs"), path: AnchoredSystemPathBuf("apps/nextjs") }: FileChanged { file: AnchoredSystemPathBuf("apps/nextjs/src/app/auth/signup/components") }}))
+2025-06-13T22:19:08.048510Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/nextjs/.turbo/turbo-build.log")}
+2025-06-13T22:19:08.048526Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@gym/nextjs"), path: AnchoredSystemPathBuf("apps/nextjs") }: FileChanged { file: AnchoredSystemPathBuf("apps/nextjs/.turbo/turbo-build.log") }}))
+2025-06-13T22:19:34.750831Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".gitignore")}
+2025-06-13T22:19:34.750851Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }: FileChanged { file: AnchoredSystemPathBuf(".gitignore") }}))

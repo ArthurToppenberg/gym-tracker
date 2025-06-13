@@ -44,3 +44,11 @@ yarn-error.log*
 
 # idea files
 .idea
+
+# logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
