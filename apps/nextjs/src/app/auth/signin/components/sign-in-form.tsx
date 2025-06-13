@@ -7,16 +7,17 @@ import Link from "next/link";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@gym/ui/components/button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-  Input,
-  Button,
-} from "@gym/ui";
+} from "@gym/ui/components/form";
+import { Input } from "@gym/ui/components/input";
+
 import type { ControllerRenderProps } from "react-hook-form";
 
 const signInSchema = z.object({

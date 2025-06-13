@@ -5,8 +5,11 @@
   "types": "./src/index.ts",
   "type": "module",
   "exports": {
-    ".": "./src/components/index.ts",
-    "./styles": "./src/styles/globals.css"
+    "./styles": "./src/styles/globals.css",
+    "./*": [
+      "./src/*.ts",
+      "./src/*.tsx"
+    ]
   },
   "scripts": {
     "ui-add": "pnpm dlx shadcn@latest add && prettier src --write --list-different"
