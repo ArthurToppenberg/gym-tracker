@@ -1,1 +1,5 @@
-{}
+{
+  "/(root)/(application)/page": "app/(root)/(application)/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/auth/signin/page": "app/auth/signin/page.js"
+}
