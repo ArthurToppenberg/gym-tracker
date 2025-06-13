@@ -2975,7 +2975,7 @@ __turbopack_context__.s({
     "state": (()=>state),
     "webauthnChallenge": (()=>webauthnChallenge)
 });
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/oauth4webapi@3.5.1/node_modules/oauth4webapi/build/index.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/oauth4webapi@3.5.2/node_modules/oauth4webapi/build/index.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$errors$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/errors.js [app-route] (ecmascript)");
 // NOTE: We use the default JWT methods here because they encrypt/decrypt the payload, not just sign it.
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$jwt$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/jwt.js [app-route] (ecmascript)");
@@ -3062,8 +3062,8 @@ function useCookie(check, name) {
 }
 const pkce = {
     /** Creates a PKCE code challenge and verifier pair. The verifier in stored in the cookie. */ async create (options) {
-        const code_verifier = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateRandomCodeVerifier"])();
-        const value = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["calculatePKCECodeChallenge"])(code_verifier);
+        const code_verifier = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateRandomCodeVerifier"])();
+        const value = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["calculatePKCECodeChallenge"])(code_verifier);
         const cookie = await sealCookie("pkceCodeVerifier", code_verifier, options);
         return {
             cookie,
@@ -3090,7 +3090,7 @@ const state = {
         // IDEA: Allow the user to pass data to be stored in the state
         const payload = {
             origin,
-            random: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateRandomState"])()
+            random: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateRandomState"])()
         };
         const value = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$jwt$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["encode"])({
             secret: options.jwt.secret,
@@ -3131,7 +3131,7 @@ const state = {
 const nonce = {
     async create (options) {
         if (!options.provider.checks.includes("nonce")) return;
-        const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateRandomNonce"])();
+        const value = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["generateRandomNonce"])();
         const cookie = await sealCookie("nonce", value, options);
         return {
             cookie,
@@ -3187,7 +3187,7 @@ __turbopack_context__.s({
     "handleOAuth": (()=>handleOAuth)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$actions$2f$callback$2f$oauth$2f$checks$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/lib/actions/callback/oauth/checks.js [app-route] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/oauth4webapi@3.5.1/node_modules/oauth4webapi/build/index.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/oauth4webapi@3.5.2/node_modules/oauth4webapi/build/index.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$errors$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/errors.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$utils$2f$providers$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/lib/utils/providers.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/lib/symbols.js [app-route] (ecmascript)");
@@ -3218,11 +3218,11 @@ async function handleOAuth(params, cookies, options) {
     if ((!token?.url || token.url.host === "authjs.dev") && (!userinfo?.url || userinfo.url.host === "authjs.dev")) {
         // We assume that issuer is always defined as this has been asserted earlier
         const issuer = new URL(provider.issuer);
-        const discoveryResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["discoveryRequest"])(issuer, {
-            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true,
-            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]
+        const discoveryResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["discoveryRequest"])(issuer, {
+            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true,
+            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]
         });
-        as = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processDiscoveryResponse"])(issuer, discoveryResponse);
+        as = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processDiscoveryResponse"])(issuer, discoveryResponse);
         if (!as.token_endpoint) throw new TypeError("TODO: Authorization server did not provide a token endpoint.");
         if (!as.userinfo_endpoint) throw new TypeError("TODO: Authorization server did not provide a userinfo endpoint.");
     } else {
@@ -3247,15 +3247,15 @@ async function handleOAuth(params, cookies, options) {
             };
             break;
         case "client_secret_post":
-            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ClientSecretPost"])(provider.clientSecret);
+            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ClientSecretPost"])(provider.clientSecret);
             break;
         case "client_secret_jwt":
-            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ClientSecretJwt"])(provider.clientSecret);
+            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["ClientSecretJwt"])(provider.clientSecret);
             break;
         case "private_key_jwt":
-            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PrivateKeyJwt"])(provider.token.clientPrivateKey, {
+            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["PrivateKeyJwt"])(provider.token.clientPrivateKey, {
                 // TODO: review in the next breaking change
-                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["modifyAssertion"]] (_header, payload) {
+                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["modifyAssertion"]] (_header, payload) {
                     payload.aud = [
                         as.issuer,
                         as.token_endpoint
@@ -3264,7 +3264,7 @@ async function handleOAuth(params, cookies, options) {
             });
             break;
         case "none":
-            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["None"])();
+            clientAuth = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["None"])();
             break;
         default:
             throw new Error("unsupported client authentication method");
@@ -3273,9 +3273,9 @@ async function handleOAuth(params, cookies, options) {
     const state = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$actions$2f$callback$2f$oauth$2f$checks$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["state"].use(cookies, resCookies, options);
     let codeGrantParams;
     try {
-        codeGrantParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["validateAuthResponse"])(as, client, new URLSearchParams(params), provider.checks.includes("state") ? state : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["skipStateCheck"]);
+        codeGrantParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["validateAuthResponse"])(as, client, new URLSearchParams(params), provider.checks.includes("state") ? state : __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["skipStateCheck"]);
     } catch (err) {
-        if (err instanceof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["AuthorizationResponseError"]) {
+        if (err instanceof __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["AuthorizationResponseError"]) {
             const cause = {
                 providerId: provider.id,
                 ...Object.fromEntries(err.cause.entries())
@@ -3290,10 +3290,10 @@ async function handleOAuth(params, cookies, options) {
     if (!options.isOnRedirectProxy && provider.redirectProxyUrl) {
         redirect_uri = provider.redirectProxyUrl;
     }
-    let codeGrantResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["authorizationCodeGrantRequest"])(as, client, clientAuth, codeGrantParams, redirect_uri, codeVerifier ?? "decoy", {
+    let codeGrantResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["authorizationCodeGrantRequest"])(as, client, clientAuth, codeGrantParams, redirect_uri, codeVerifier ?? "decoy", {
         // TODO: move away from allowing insecure HTTP requests
-        [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true,
-        [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: (...args)=>{
+        [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true,
+        [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: (...args)=>{
             if (!provider.checks.includes("pkce")) {
                 args[1].body.delete("code_verifier");
             }
@@ -3319,10 +3319,10 @@ async function handleOAuth(params, cookies, options) {
                         const tenantRe = /microsoftonline\.com\/(\w+)\/v2\.0/;
                         const tenantId = as.issuer?.match(tenantRe)?.[1] ?? "common";
                         const issuer = new URL(as.issuer.replace(tenantId, tid));
-                        const discoveryResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["discoveryRequest"])(issuer, {
-                            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]
+                        const discoveryResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["discoveryRequest"])(issuer, {
+                            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]
                         });
-                        as = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processDiscoveryResponse"])(issuer, discoveryResponse);
+                        as = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processDiscoveryResponse"])(issuer, discoveryResponse);
                     }
                     break;
                 }
@@ -3330,13 +3330,13 @@ async function handleOAuth(params, cookies, options) {
                 break;
         }
     }
-    const processedCodeResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processAuthorizationCodeResponse"])(as, client, codeGrantResponse, {
+    const processedCodeResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processAuthorizationCodeResponse"])(as, client, codeGrantResponse, {
         expectedNonce: await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$actions$2f$callback$2f$oauth$2f$checks$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["nonce"].use(cookies, resCookies, options),
         requireIdToken
     });
     const tokens = processedCodeResponse;
     if (requireIdToken) {
-        const idTokenClaims = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getValidatedIdTokenClaims"])(processedCodeResponse);
+        const idTokenClaims = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getValidatedIdTokenClaims"])(processedCodeResponse);
         profile = idTokenClaims;
         // Apple sends some of the user information in a `user` parameter as a stringified JSON.
         // It also only does so the first time the user consents to share their information.
@@ -3346,12 +3346,12 @@ async function handleOAuth(params, cookies, options) {
             } catch  {}
         }
         if (provider.idToken === false) {
-            const userinfoResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["userInfoRequest"])(as, client, processedCodeResponse.access_token, {
-                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]],
+            const userinfoResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["userInfoRequest"])(as, client, processedCodeResponse.access_token, {
+                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]],
                 // TODO: move away from allowing insecure HTTP requests
-                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true
+                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true
             });
-            profile = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processUserInfoResponse"])(as, client, idTokenClaims.sub, userinfoResponse);
+            profile = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processUserInfoResponse"])(as, client, idTokenClaims.sub, userinfoResponse);
         }
     } else {
         if (userinfo?.request) {
@@ -3361,8 +3361,8 @@ async function handleOAuth(params, cookies, options) {
             });
             if (_profile instanceof Object) profile = _profile;
         } else if (userinfo?.url) {
-            const userinfoResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["userInfoRequest"])(as, client, processedCodeResponse.access_token, {
-                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]
+            const userinfoResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["userInfoRequest"])(as, client, processedCodeResponse.access_token, {
+                [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]
             });
             profile = await userinfoResponse.json();
         } else {
@@ -4369,7 +4369,7 @@ __turbopack_context__.s({
     "getAuthorizationUrl": (()=>getAuthorizationUrl)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$actions$2f$callback$2f$oauth$2f$checks$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/lib/actions/callback/oauth/checks.js [app-route] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/oauth4webapi@3.5.1/node_modules/oauth4webapi/build/index.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/oauth4webapi@3.5.2/node_modules/oauth4webapi/build/index.js [app-route] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/.pnpm/@auth+core@0.37.2/node_modules/@auth/core/lib/symbols.js [app-route] (ecmascript)");
 ;
 ;
@@ -4383,12 +4383,12 @@ async function getAuthorizationUrl(query, options) {
         // If url is undefined, we assume that issuer is always defined
         // We check this in assert.ts
         const issuer = new URL(provider.issuer);
-        const discoveryResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["discoveryRequest"])(issuer, {
-            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]],
+        const discoveryResponse = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["discoveryRequest"])(issuer, {
+            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]]: provider[__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$auth$2b$core$40$0$2e$37$2e$2$2f$node_modules$2f40$auth$2f$core$2f$lib$2f$symbols$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["customFetch"]],
             // TODO: move away from allowing insecure HTTP requests
-            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true
+            [__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["allowInsecureRequests"]]: true
         });
-        const as = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$1$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processDiscoveryResponse"])(issuer, discoveryResponse);
+        const as = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$oauth4webapi$40$3$2e$5$2e$2$2f$node_modules$2f$oauth4webapi$2f$build$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["processDiscoveryResponse"])(issuer, discoveryResponse);
         if (!as.authorization_endpoint) {
             throw new TypeError("Authorization server did not provide an authorization endpoint.");
         }
