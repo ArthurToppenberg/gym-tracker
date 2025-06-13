@@ -1,9 +1,0 @@
-{
-  "/api/auth/register/route": "/api/auth/register",
-  "/api/trpc/[trpc]/route": "/api/trpc/[trpc]",
-  "/_not-found/page": "/_not-found",
-  "/api/auth/[...nextauth]/route": "/api/auth/[...nextauth]",
-  "/(root)/(application)/page": "/",
-  "/auth/signin/page": "/auth/signin",
-  "/auth/signup/page": "/auth/signup"
-}
