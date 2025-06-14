@@ -6,10 +6,7 @@
   "type": "module",
   "exports": {
     "./styles": "./src/styles/globals.css",
-    "./*": [
-      "./src/*.ts",
-      "./src/*.tsx"
-    ]
+    "./components/*": "./src/components/*.tsx"
   },
   "scripts": {
     "ui-add": "pnpm dlx shadcn@latest add && prettier src --write --list-different"
