@@ -1,4 +1,4 @@
-import { ProtectedProcedureInput } from "../../helpers";
+import type { ProtectedProcedureInput } from "../../helpers";
 import { ZCreateExersiseInput } from "./createExersise.schema";
 import { getExerciseSimilarity } from "@gym/db/utils";
 

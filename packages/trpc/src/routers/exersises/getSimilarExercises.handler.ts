@@ -1,5 +1,5 @@
 import { getExerciseSimilarity } from "@gym/db/utils";
-import { ProtectedProcedureInput } from "../../helpers";
+import type { ProtectedProcedureInput } from "../../helpers";
 import { ZGetSimilarExercisesInput } from "./getSimilarExercises.schema";
 
 export const getSimilarExercisesHandler = async ({
