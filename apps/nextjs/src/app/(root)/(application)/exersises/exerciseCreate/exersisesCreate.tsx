@@ -46,11 +46,17 @@ export const ExercisesCreate = ({
   const [pendingExercise, setPendingExercise] =
     React.useState<ExerciseFormValues | null>(null);
   const [similarExercises, setSimilarExercises] = React.useState<
-    { id: number; name: string; similarity: number }[]
+    {
+      id: number;
+      name: string;
+      variation: ExerciseVariation;
+      similarity: number;
+    }[]
   >([]);
   const [similarityInput, setSimilarityInput] = React.useState<{
     name: string;
   }>({ name: "" });
+  const [localError, setLocalError] = React.useState<string | null>(null);
 
   const variationsQuery = api.exercises.getExerciseVariations.useQuery({});
 
@@ -92,9 +98,13 @@ export const ExercisesCreate = ({
       setSimilarExercises([]);
       setPendingExercise(null);
       form.reset();
+      setLocalError(null);
       if (onExerciseCreated) {
         onExerciseCreated();
       }
+    },
+    onError: (error) => {
+      setLocalError(error.message);
     },
   });
 
@@ -142,6 +152,7 @@ export const ExercisesCreate = ({
 
   function handleFormSubmit(values: ExerciseFormValues) {
     if (!variationsQuery.data?.variations) return;
+    setLocalError(null);
     setPendingExercise({
       ...values,
       variation: values.variation as ExerciseVariation,
@@ -164,6 +175,11 @@ export const ExercisesCreate = ({
     setShowSimilarDialog(false);
     setPendingExercise(null);
     form.reset();
+  }
+
+  function handleReset() {
+    form.reset();
+    setLocalError(null);
   }
 
   return (
@@ -236,12 +252,20 @@ export const ExercisesCreate = ({
                     </FormItem>
                   )}
                 />
-                {createError && (
+                {localError && (
                   <div className="mb-2 text-center text-sm text-red-500">
-                    {createError.message}
+                    {localError}
                   </div>
                 )}
-                <div className="flex justify-end">
+                <div className="flex justify-between">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={handleReset}
+                    disabled={isCreating || similarQuery.isFetching}
+                  >
+                    Reset
+                  </Button>
                   <Button
                     type="submit"
                     disabled={isCreating || similarQuery.isFetching}

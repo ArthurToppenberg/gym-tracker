@@ -8,11 +8,17 @@ import {
 } from "@gym/ui/components/dialog";
 import { Button } from "@gym/ui/components/button";
 import React from "react";
+import type { ExerciseVariation } from "./types";
 
 interface SimilarExercisesDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  mostSimilarExercises: { id: number; name: string; similarity: number }[];
+  mostSimilarExercises: {
+    id: number;
+    name: string;
+    variation: ExerciseVariation;
+    similarity: number;
+  }[];
   onConfirm: () => void;
   onCancel: () => void;
   error?: string | null;
@@ -61,7 +67,16 @@ export const SimilarExercisesDialog: React.FC<SimilarExercisesDialogProps> = ({
           >
             <div className="flex flex-col">
               <span className="font-medium">
-                {exercise.name}
+                {exercise.name}{" "}
+                <span className="text-muted-foreground text-xs">
+                  (
+                  {exercise.variation.charAt(0) +
+                    exercise.variation
+                      .slice(1)
+                      .toLowerCase()
+                      .replace(/_/g, " ")}
+                  )
+                </span>
                 {exercise.similarity === 1 && " ⚠️"}
               </span>
             </div>

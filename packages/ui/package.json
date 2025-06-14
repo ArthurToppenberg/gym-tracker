@@ -7,7 +7,8 @@
   "exports": {
     "./styles/globals.css": "./src/styles/globals.css",
     "./components/*": "./src/components/*.tsx",
-    "./postcss.config": "./postcss.config.js"
+    "./postcss.config": "./postcss.config.js",
+    "./hooks/*": "./src/hooks/*.ts"
   },
   "scripts": {
     "ui-add": "pnpm dlx shadcn@latest add && prettier src --write --list-different"

@@ -8,7 +8,7 @@ const ExercisePage = () => {
   const getExercisesQuerry = api.exercises.getExercises.useQuery({});
 
   return (
-    <div className="flex flex-col items-center gap-4 px-[25%] pt-6">
+    <div className="flex h-full flex-col items-center gap-4 px-2 pt-2 pb-20 lg:px-[25%] lg:pt-6 lg:pb-0">
       <ExerciseList exercises={getExercisesQuerry?.data?.items ?? []} />
       <ExercisesCreate
         onExerciseCreated={() => {

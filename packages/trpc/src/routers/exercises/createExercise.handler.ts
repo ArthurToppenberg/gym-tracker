@@ -16,9 +16,30 @@ export const createExerciseHandler = async ({
     (exercise) => exercise.similarity === 1
   );
 
-  if (duplicateExercises.length > 0) {
+  const filteredDuplicateExercises = duplicateExercises[0];
+
+  if (!filteredDuplicateExercises) {
+    throw new Error("Error when checking for duplicate exercises");
+  }
+
+  const exerciseVariation = await ctx.db.exercise.findFirst({
+    where: {
+      id: filteredDuplicateExercises.id.toString(),
+    },
+    select: {
+      variation: true,
+    },
+  });
+
+  if (
+    duplicateExercises.length > 0 &&
+    exerciseVariation?.variation === input.variation
+  ) {
     throw new Error(`Exercise with name ${input.name} already exists.`);
   }
+
+  const capitalizedVariation =
+    input.variation.charAt(0).toUpperCase() + input.variation.slice(1);
 
   const response = await ctx.db.exercise.create({
     data: {
