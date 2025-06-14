@@ -1,4 +1,4 @@
-import { ProtectedProcedureInput } from "../../helpers";
+import type { ProtectedProcedureInput } from "../../helpers";
 import type { ZGetExersisesInput } from "./getExersises.schema";
 
 export const getExersisesHandler = async ({

@@ -55,16 +55,12 @@ export const SidebarUser = ({ user }: { user: User }) => {
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">
-                  {user.name ? (
-                    user.name
-                  ) : (
+                  {user.name ?? (
                     <Skeleton className="inline-block h-4 w-20 align-middle" />
                   )}
                 </span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.email ? (
-                    user.email
-                  ) : (
+                  {user.email ?? (
                     <Skeleton className="inline-block h-3 w-24 align-middle" />
                   )}
                 </span>
@@ -95,16 +91,12 @@ export const SidebarUser = ({ user }: { user: User }) => {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
-                    {user.name ? (
-                      user.name
-                    ) : (
+                    {user.name ?? (
                       <Skeleton className="inline-block h-4 w-20 align-middle" />
                     )}
                   </span>
                   <span className="text-muted-foreground truncate text-xs">
-                    {user.email ? (
-                      user.email
-                    ) : (
+                    {user.email ?? (
                       <Skeleton className="inline-block h-3 w-24 align-middle" />
                     )}
                   </span>
