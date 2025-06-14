@@ -36,28 +36,27 @@ export const authConfig = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = typeof credentials.email === "string" ? credentials.email : "";
-        const password = typeof credentials.password === "string" ? credentials.password : "";
+        const email =
+          typeof credentials.email === "string" ? credentials.email : "";
+        const password =
+          typeof credentials.password === "string" ? credentials.password : "";
 
         if (!email || !password) {
           return null;
         }
 
         const user = await db.user.findUnique({
-          where: { email }
+          where: { email },
         });
 
         if (!user || !user.password) {
           return null;
         }
 
-        const isPasswordValid = await compare(
-          password,
-          user.password
-        );
+        const isPasswordValid = await compare(password, user.password);
 
         if (!isPasswordValid) {
           return null;
@@ -69,12 +68,12 @@ export const authConfig = {
           name: user.name,
           image: user.image,
         };
-      }
-    })
+      },
+    }),
   ],
   adapter: PrismaAdapter(db),
   session: {
-    strategy: "jwt"
+    strategy: "jwt",
   },
   pages: {
     signIn: "/auth/signin",

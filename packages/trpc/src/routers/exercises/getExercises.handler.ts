@@ -1,10 +1,10 @@
 import type { ProtectedProcedureInput } from "../../helpers";
-import type { ZGetExersisesInput } from "./getExersises.schema";
+import { ZGetExercisesInput } from "./getExercises.schema";
 
-export const getExersisesHandler = async ({
+export const getExercisesHandler = async ({
   ctx,
   input,
-}: ProtectedProcedureInput<typeof ZGetExersisesInput>) => {
+}: ProtectedProcedureInput<typeof ZGetExercisesInput>) => {
   const { cursor, limit: inputLimit } = input;
 
   const MAX_LIMIT = 1000;
@@ -16,7 +16,7 @@ export const getExersisesHandler = async ({
     select: {
       id: true,
       name: true,
-      machine: true,
+      variation: true,
       updatedAt: true,
     },
     take: limit,
@@ -43,4 +43,4 @@ export const getExersisesHandler = async ({
   };
 };
 
-export default getExersisesHandler;
+export default getExercisesHandler;

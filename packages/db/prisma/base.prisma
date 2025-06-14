@@ -4,13 +4,7 @@
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["multiSchema", "postgresqlExtensions"]
-  // output          = "../../generated/client"
-  // moduleFormat    = "esm"
 }
-
-// generator json {
-//   provider = "prisma-json-types-generator"
-// }
 
 datasource db {
     provider = "postgresql"
@@ -25,7 +19,7 @@ datasource db {
 model Exercise {
   id        String   @id @default(cuid())
   name      String
-  machine   String
+  variation   ExerciseVariation
   createdBy User @relation(fields: [createdById], references: [id])
   createdById String
   createdAt DateTime @default(now())
@@ -33,3 +27,16 @@ model Exercise {
 
   @@schema("public")
 }
+
+enum ExerciseVariation {
+  CABLE
+  BARBELL
+  DUMBBELL
+  MACHINE
+  BODYWEIGHT
+  ELASTIC_BAND
+  BAR
+
+  @@schema("public")
+}
+

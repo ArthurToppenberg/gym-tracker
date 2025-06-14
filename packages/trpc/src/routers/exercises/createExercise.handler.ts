@@ -1,11 +1,11 @@
 import type { ProtectedProcedureInput } from "../../helpers";
-import { ZCreateExersiseInput } from "./createExersise.schema";
+import { ZCreateExerciseInput } from "./createExercise.schema";
 import { getExerciseSimilarity } from "@gym/db/utils";
 
-export const createExersiseHandler = async ({
+export const createExerciseHandler = async ({
   ctx,
   input,
-}: ProtectedProcedureInput<typeof ZCreateExersiseInput>) => {
+}: ProtectedProcedureInput<typeof ZCreateExerciseInput>) => {
   if (!ctx.session.user.id) {
     throw new Error("User not found");
   }
@@ -23,7 +23,7 @@ export const createExersiseHandler = async ({
   const response = await ctx.db.exercise.create({
     data: {
       name: input.name,
-      machine: input.machine,
+      variation: input.variation,
       createdBy: { connect: { id: ctx.session.user.id } },
     },
     select: {
@@ -40,4 +40,4 @@ export const createExersiseHandler = async ({
   };
 };
 
-export default createExersiseHandler;
+export default createExerciseHandler;

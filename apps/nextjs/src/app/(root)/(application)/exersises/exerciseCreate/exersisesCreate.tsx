@@ -20,13 +20,26 @@ import { api } from "@gym/trpc/react";
 import { Input } from "@gym/ui/components/input";
 import { Button } from "@gym/ui/components/button";
 import React from "react";
-import { formSchema } from "./exersisesFormSchema";
-import type { ExerciseFormValues } from "./exersisesFormSchema";
+import { z } from "zod";
 import { ExerciseCreatedDialog } from "./ExerciseCreatedDialog";
 import { SimilarExercisesDialog } from "./SimilarExercisesDialog";
 import { Dialog } from "@gym/ui/components/dialog";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "@gym/ui/components/select";
+import type { ExerciseVariation } from "./types";
 
-export const ExercisesCreate = () => {
+interface ExercisesCreateProps {
+  onExerciseCreated?: () => void;
+}
+
+export const ExercisesCreate = ({
+  onExerciseCreated,
+}: ExercisesCreateProps) => {
   const [createdName, setCreatedName] = React.useState("");
   const [showCreatedDialog, setShowCreatedDialog] = React.useState(false);
   const [showSimilarDialog, setShowSimilarDialog] = React.useState(false);
@@ -37,17 +50,34 @@ export const ExercisesCreate = () => {
   >([]);
   const [similarityInput, setSimilarityInput] = React.useState<{
     name: string;
-    nonce: number;
-  }>({ name: "", nonce: 0 });
-  const [showSimilarError, setShowSimilarError] = React.useState<string | null>(
-    null,
-  );
+  }>({ name: "" });
+
+  const variationsQuery = api.exercises.getExerciseVariations.useQuery({});
+
+  const formSchema = React.useMemo(() => {
+    const variations = variationsQuery.data?.variations;
+    if (variations && variations.length > 0) {
+      return z.object({
+        name: z
+          .string()
+          .min(4, { message: "Exercise name must be at least 4 characters." })
+          .max(20, { message: "Exercise name must be at most 20 characters." }),
+        variation: z.enum(variations as [string, ...string[]]),
+      });
+    }
+    return z.object({
+      name: z.string(),
+      variation: z.string(),
+    });
+  }, [variationsQuery.data]);
+
+  type ExerciseFormValues = z.infer<typeof formSchema>;
 
   const form = useForm<ExerciseFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      machine: "",
+      variation: variationsQuery.data?.variations[0],
     },
   });
 
@@ -55,75 +85,89 @@ export const ExercisesCreate = () => {
     mutate: createExercise,
     isPending: isCreating,
     error: createError,
-  } = api.exersises.createExersise.useMutation({
+  } = api.exercises.createExercise.useMutation({
     onSuccess: (data, variables) => {
       setCreatedName(variables.name);
       setShowCreatedDialog(true);
       setSimilarExercises([]);
       setPendingExercise(null);
       form.reset();
+      if (onExerciseCreated) {
+        onExerciseCreated();
+      }
     },
   });
 
-  const similarQuery = api.exersises.getSimilarExercises.useQuery(
+  const similarQuery = api.exercises.getSimilarExercises.useQuery(
     similarityInput,
     {
       enabled: !!similarityInput.name,
-      staleTime: 0,
     },
   );
 
   React.useEffect(() => {
-    if (similarQuery.error) {
-      setShowSimilarError(
-        similarQuery.error.message || "Failed to fetch similar exercises.",
-      );
-      setShowSimilarDialog(true);
-      setPendingExercise(null);
+    if (
+      variationsQuery.data?.variations?.length &&
+      !form.getValues("variation")
+    ) {
+      const firstVariation = variationsQuery.data.variations[0] as
+        | ExerciseVariation
+        | undefined;
+      if (firstVariation) {
+        form.setValue("variation", firstVariation);
+      }
     }
-  }, [similarQuery.error]);
+  }, [variationsQuery.data, form]);
 
   React.useEffect(() => {
     if (!pendingExercise || !similarQuery.isSuccess) return;
     const similar = similarQuery.data?.similarExersises || [];
-    if (similar.length === 0) {
-      createExercise(pendingExercise);
+    if (similar.length === 0 && variationsQuery.data?.variations) {
+      createExercise({
+        ...pendingExercise,
+        variation: pendingExercise.variation as ExerciseVariation,
+      });
       setPendingExercise(null);
-    } else {
+    } else if (similar.length > 0) {
       setSimilarExercises(similar);
       setShowSimilarDialog(true);
-      setShowSimilarError(null);
     }
   }, [
     similarQuery.isSuccess,
     similarQuery.data,
     pendingExercise,
     createExercise,
+    variationsQuery.data,
   ]);
 
   function handleFormSubmit(values: ExerciseFormValues) {
-    setPendingExercise(values);
-    setSimilarityInput({ name: values.name, nonce: Date.now() });
-    setShowSimilarError(null);
+    if (!variationsQuery.data?.variations) return;
+    setPendingExercise({
+      ...values,
+      variation: values.variation as ExerciseVariation,
+    });
+    setSimilarityInput({ name: values.name });
   }
 
   function handleConfirmCreate() {
-    if (pendingExercise) {
-      createExercise(pendingExercise);
+    if (pendingExercise && variationsQuery.data?.variations) {
+      createExercise({
+        ...pendingExercise,
+        variation: pendingExercise.variation as ExerciseVariation,
+      });
+      setPendingExercise(null);
     }
     setShowSimilarDialog(false);
-    setShowSimilarError(null);
   }
 
   function handleCancelCreate() {
     setShowSimilarDialog(false);
     setPendingExercise(null);
-    setShowSimilarError(null);
     form.reset();
   }
 
   return (
-    <div className="h-full w-1/2 p-4">
+    <div className="w-full">
       <Dialog open={showCreatedDialog} onOpenChange={setShowCreatedDialog}>
         <Card>
           <CardHeader>
@@ -150,12 +194,43 @@ export const ExercisesCreate = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="machine"
+                  name="variation"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Machine Name</FormLabel>
+                      <FormLabel>Variation</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        {variationsQuery.isLoading ? (
+                          <div>Loading variations...</div>
+                        ) : variationsQuery.error ? (
+                          <div className="text-red-500">
+                            Failed to load variations
+                          </div>
+                        ) : (
+                          <Select
+                            value={field.value ?? ""}
+                            onValueChange={(val) =>
+                              field.onChange(val as ExerciseVariation)
+                            }
+                            disabled={variationsQuery.isLoading}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue placeholder="Select a variation" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {variationsQuery.data?.variations.map(
+                                (variation: ExerciseVariation) => (
+                                  <SelectItem key={variation} value={variation}>
+                                    {variation.charAt(0) +
+                                      variation
+                                        .slice(1)
+                                        .toLowerCase()
+                                        .replace("_", " ")}
+                                  </SelectItem>
+                                ),
+                              )}
+                            </SelectContent>
+                          </Select>
+                        )}
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -169,9 +244,9 @@ export const ExercisesCreate = () => {
                 <div className="flex justify-end">
                   <Button
                     type="submit"
-                    disabled={isCreating || similarQuery.isLoading}
+                    disabled={isCreating || similarQuery.isFetching}
                   >
-                    {isCreating || similarQuery.isLoading
+                    {isCreating || similarQuery.isFetching
                       ? "Checking..."
                       : "Create"}
                   </Button>
@@ -192,7 +267,6 @@ export const ExercisesCreate = () => {
         mostSimilarExercises={similarExercises}
         onConfirm={handleConfirmCreate}
         onCancel={handleCancelCreate}
-        error={showSimilarError}
       />
     </div>
   );

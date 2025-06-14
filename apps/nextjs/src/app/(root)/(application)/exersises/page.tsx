@@ -1,12 +1,14 @@
-import { ExercisesCreate } from "./exerciseCreate/exersisesCreate";
-import { ExercisesList } from "./exersisesList";
+import { api, HydrateClient } from "@gym/trpc/server";
+import ExercisePage from "./exercisePage";
 
-const ExercisesPage = () => {
+const ExercisesPage = async () => {
+  void (await api.exercises.getExercises.prefetch({}));
+  void (await api.exercises.getExerciseVariations.prefetch({}));
+
   return (
-    <div className="flex flex-row">
-      <ExercisesList />
-      <ExercisesCreate />
-    </div>
+    <HydrateClient>
+      <ExercisePage />
+    </HydrateClient>
   );
 };
 
