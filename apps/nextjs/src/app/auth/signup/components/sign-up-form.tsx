@@ -3,42 +3,62 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@gym/ui/components/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@gym/ui/components/form";
+import { Input } from "@gym/ui/components/input";
+
+import type { ControllerRenderProps } from "react-hook-form";
+
+const signUpSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z
+    .string()
+    .min(6, { message: "Password must be at least 6 characters" }),
+});
+
+type SignUpValues = z.infer<typeof signUpSchema>;
 
 export const SignUpForm = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const form = useForm<SignUpValues>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSubmit = async (values: SignUpValues) => {
     setError(null);
     setIsLoading(true);
-
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
+        body: JSON.stringify(values),
       });
-
       if (!response.ok) {
         let data: unknown = {};
         try {
           data = await response.json();
-        } catch {
-          // If parsing fails, fallback to generic error
-        }
+        } catch {}
         if (
           typeof data === "object" &&
           data !== null &&
@@ -49,7 +69,6 @@ export const SignUpForm = () => {
         }
         throw new Error("Something went wrong");
       }
-
       router.push("/auth/signin");
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -64,62 +83,91 @@ export const SignUpForm = () => {
 
   return (
     <div className="w-full max-w-md space-y-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium">
-            Name
-          </label>
-          <input
-            id="name"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
             name="name"
-            type="text"
-            autoComplete="name"
-            required
-            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<SignUpValues, "name">;
+            }) => (
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    autoComplete="name"
+                    placeholder="Your name"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium">
-            Email address
-          </label>
-          <input
-            id="email"
+          <FormField
+            control={form.control}
             name="email"
-            type="email"
-            autoComplete="email"
-            required
-            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<SignUpValues, "email">;
+            }) => (
+              <FormItem>
+                <FormLabel>Email address</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <label htmlFor="password" className="block text-sm font-medium">
-            Password
-          </label>
-          <input
-            id="password"
+          <FormField
+            control={form.control}
             name="password"
-            type="password"
-            autoComplete="new-password"
-            required
-            className="mt-1 block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 focus:outline-none"
+            render={({
+              field,
+            }: {
+              field: ControllerRenderProps<SignUpValues, "password">;
+            }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    autoComplete="new-password"
+                    placeholder="••••••••"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        {error && <div className="text-sm text-red-500">{error}</div>}
+          {error && <div className="text-sm text-red-500">{error}</div>}
 
-        <div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none disabled:opacity-50"
-          >
-            {isLoading ? "Creating account..." : "Create account"}
-          </button>
-        </div>
-      </form>
-
+          <div>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              variant={"outline"}
+              className="w-full"
+            >
+              {isLoading ? "Creating account..." : "Create account"}
+            </Button>
+          </div>
+        </form>
+      </Form>
       <div className="text-center text-sm">
         <span className="text-gray-400">Already have an account? </span>
         <Link

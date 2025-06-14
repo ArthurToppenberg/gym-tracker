@@ -1,0 +1,13 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# UI Guidelines for Cursor Agent
+
+- All UI should be built using the `@gym/ui` package.
+- The `@gym/ui` package is a wrapper around [shadcn/ui](mdc:https:/ui.shadcn.com) components.
+- When building UI, leverage knowledge of shadcn components, props, and patterns.
+- Do not use raw shadcn components directly—always use the exported components from `@gym/ui`.
+- Follow best practices for composability and accessibility as established by shadcn.
+- If a component or pattern exists in shadcn, assume a similar API is available in `@gym/ui` unless otherwise specified.

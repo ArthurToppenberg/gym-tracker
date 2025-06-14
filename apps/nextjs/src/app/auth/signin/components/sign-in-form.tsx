@@ -117,7 +117,12 @@ export const SignInForm = () => {
           {error && <div className="text-sm text-red-500">{error}</div>}
 
           <div>
-            <Button type="submit" disabled={isLoading} className="w-full">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              variant={"outline"}
+              className="w-full"
+            >
               {isLoading ? "Signing in..." : "Sign in"}
             </Button>
           </div>
