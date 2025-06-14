@@ -37,7 +37,7 @@ model User {
     password      String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    exercises     Exercise[]
     @@schema("public")
 }
 

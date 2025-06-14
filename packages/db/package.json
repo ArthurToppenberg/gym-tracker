@@ -4,7 +4,8 @@
   "private": true,
   "exports": {
     ".": "./src/client.ts",
-    "./generated": "./src/generated/client"
+    "./generated": "./src/generated/client",
+    "./utils": "./src/utils/index.ts"
   },
   "types": "./src/client.ts",
   "type": "module",
@@ -14,6 +15,7 @@
     "db:push": "pnpm with-env prisma db push",
     "db:studio": "pnpm with-env prisma studio",
     "postinstall": "pnpm with-env prisma generate",
+    "db:reset": "pnpm with-env prisma migrate reset",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {

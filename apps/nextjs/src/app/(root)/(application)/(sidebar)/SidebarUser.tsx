@@ -20,11 +20,12 @@ import { CreditCard, MoreVertical, User } from "lucide-react";
 import { Bell } from "lucide-react";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
+import { Skeleton } from "@gym/ui/components/skeleton";
 
 interface User {
-  name: string;
-  email: string;
-  avatar: string;
+  name: string | null | undefined;
+  email: string | null | undefined;
+  avatar: string | null | undefined;
 }
 
 export const SidebarUser = ({ user }: { user: User }) => {
@@ -40,15 +41,32 @@ export const SidebarUser = ({ user }: { user: User }) => {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">
-                  <User />
-                </AvatarFallback>
+                {user.avatar ? (
+                  <AvatarImage
+                    src={user.avatar ?? undefined}
+                    alt={user.name ?? undefined}
+                  />
+                ) : (
+                  <AvatarFallback className="rounded-lg">
+                    <User />
+                  </AvatarFallback>
+                )}
+                {!user.avatar && null}
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
+                <span className="truncate font-medium">
+                  {user.name ? (
+                    user.name
+                  ) : (
+                    <Skeleton className="inline-block h-4 w-20 align-middle" />
+                  )}
+                </span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {user.email}
+                  {user.email ? (
+                    user.email
+                  ) : (
+                    <Skeleton className="inline-block h-3 w-24 align-middle" />
+                  )}
                 </span>
               </div>
               <MoreVertical className="ml-auto size-4" />
@@ -63,15 +81,32 @@ export const SidebarUser = ({ user }: { user: User }) => {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">
-                    <User />
-                  </AvatarFallback>
+                  {user.avatar ? (
+                    <AvatarImage
+                      src={user.avatar ?? undefined}
+                      alt={user.name ?? undefined}
+                    />
+                  ) : (
+                    <AvatarFallback className="rounded-lg">
+                      <User />
+                    </AvatarFallback>
+                  )}
+                  {!user.avatar && null}
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
+                  <span className="truncate font-medium">
+                    {user.name ? (
+                      user.name
+                    ) : (
+                      <Skeleton className="inline-block h-4 w-20 align-middle" />
+                    )}
+                  </span>
                   <span className="text-muted-foreground truncate text-xs">
-                    {user.email}
+                    {user.email ? (
+                      user.email
+                    ) : (
+                      <Skeleton className="inline-block h-3 w-24 align-middle" />
+                    )}
                   </span>
                 </div>
               </div>

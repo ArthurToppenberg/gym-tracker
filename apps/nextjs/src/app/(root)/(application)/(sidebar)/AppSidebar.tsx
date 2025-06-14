@@ -6,7 +6,7 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -16,29 +16,19 @@ import { auth } from "@gym/trpc/auth";
 
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: "Dashboard",
+    url: ".",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
+    title: "Track",
+    url: ".",
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Exercises",
+    url: "/exersises",
+    icon: Inbox,
   },
 ];
 
@@ -51,9 +41,11 @@ export const AppSidebar = async () => {
 
   return (
     <Sidebar>
+      <SidebarHeader>
+        <h1 className="text-center text-2xl">Gym Tracker</h1>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -73,9 +65,9 @@ export const AppSidebar = async () => {
       <SidebarFooter>
         <SidebarUser
           user={{
-            name: session.user.name ?? "Loading ...",
-            email: session.user.email ?? "Loading ...",
-            avatar: session.user.image ?? "", // for now just shows the default avatar icon
+            name: session.user.name,
+            email: session.user.email,
+            avatar: session.user.image, // for now just shows the default avatar icon
           }}
         />
       </SidebarFooter>

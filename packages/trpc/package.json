@@ -7,8 +7,8 @@
     "./server": "./src/server.ts",
     "./react": "./src/react.tsx",
     "./auth": "./src/auth/index.ts",
-    "./api": "./src/api/root.ts",
-    "./api/trpc": "./src/api/trpc.ts"
+    "./api": "./src/root.ts",
+    "./api/trpc": "./src/trpc.ts"
   },
   "types": "./src/index.ts",
   "type": "module",

@@ -12,7 +12,7 @@ import superjson from "superjson";
 import { ZodError } from "zod";
 
 import { db } from "@gym/db";
-import { auth } from "../auth";
+import { auth } from "./auth";
 
 /**
  * 1. CONTEXT
@@ -131,3 +131,27 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+const UNSTABLE_HANDLER_CACHE: Record<string, Function> = {};
+
+export const importHandler = async <
+  T extends {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    default: Function;
+  },
+>(
+  /**
+   * The name of the handler in cache. It has to be unique across all routes
+   */
+  name: string,
+  importer: () => Promise<T>
+) => {
+  if (!UNSTABLE_HANDLER_CACHE[name]) {
+    const importedModule = await importer();
+    UNSTABLE_HANDLER_CACHE[name] = importedModule.default;
+    return importedModule.default as T["default"];
+  }
+
+  return UNSTABLE_HANDLER_CACHE[name] as T["default"];
+};

@@ -1,11 +1,16 @@
 import { SidebarProvider } from "@gym/ui/components/sidebar";
-import { AppSidebar } from "./components/AppSidebar";
+import { AppSidebar } from "./(sidebar)/AppSidebar";
 
-const ApplicationGrid = () => {
+interface ApplicationGridProps {
+  children: React.ReactNode;
+}
+
+const ApplicationGrid = ({ children }: ApplicationGridProps) => {
   return (
     <SidebarProvider>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex w-full flex-row">
         <AppSidebar />
+        <div className="flex flex-1 flex-col">{children}</div>
       </div>
     </SidebarProvider>
   );
