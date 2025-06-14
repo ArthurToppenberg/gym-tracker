@@ -47,7 +47,6 @@ export const ExercisesCreate = () => {
     },
   });
 
-  // Mutation for creating an exercise
   const {
     mutate: createExercise,
     isPending: isCreating,
@@ -62,7 +61,6 @@ export const ExercisesCreate = () => {
     },
   });
 
-  // Query for similar exercises, enabled only when similarityInput.name is set
   const similarQuery = api.exersises.getSimilarExercises.useQuery(
     similarityInput,
     {
@@ -70,7 +68,6 @@ export const ExercisesCreate = () => {
     },
   );
 
-  // Effect to handle similarity check result
   React.useEffect(() => {
     if (!pendingExercise || !similarQuery.isSuccess) return;
     const similar = similarQuery.data?.similarExersises || [];
@@ -88,13 +85,11 @@ export const ExercisesCreate = () => {
     createExercise,
   ]);
 
-  // Step 1: Handle form submit
   function handleFormSubmit(values: ExerciseFormValues) {
     setPendingExercise(values);
     setSimilarityInput({ name: values.name });
   }
 
-  // Step 2a: User confirms creation despite similarity
   function handleConfirmCreate() {
     if (pendingExercise) {
       createExercise(pendingExercise);
@@ -103,7 +98,6 @@ export const ExercisesCreate = () => {
     setShowSimilarDialog(false);
   }
 
-  // Step 2b: User cancels creation
   function handleCancelCreate() {
     setShowSimilarDialog(false);
     setPendingExercise(null);
