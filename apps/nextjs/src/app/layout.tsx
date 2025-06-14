@@ -3,6 +3,7 @@ import "@gym/ui/styles/globals.css";
 import { type Metadata } from "next";
 
 import Providers from "./providers";
+import MotivationOverlay from "./components/MotivationOverlay";
 
 export const metadata: Metadata = {
   title: "Gym Tracker",
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>{children}</Providers>
+        <MotivationOverlay />
       </body>
     </html>
   );

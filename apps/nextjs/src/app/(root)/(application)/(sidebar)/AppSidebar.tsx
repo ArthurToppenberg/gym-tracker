@@ -13,7 +13,6 @@ import {
 } from "@gym/ui/components/sidebar";
 import { SidebarUser } from "./SidebarUser";
 import { auth } from "@gym/trpc/auth";
-import { useIsMobile } from "@gym/ui/hooks/use-mobile";
 
 const items = [
   {
@@ -23,12 +22,12 @@ const items = [
   },
   {
     title: "Track",
-    url: ".",
+    url: "/record",
     icon: ChartLine,
   },
   {
     title: "Exercises",
-    url: "/exersises",
+    url: "/exercises",
     icon: Dumbbell,
   },
 ];

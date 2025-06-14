@@ -87,26 +87,23 @@ export const ExercisesCreate = ({
     },
   });
 
-  const {
-    mutate: createExercise,
-    isPending: isCreating,
-    error: createError,
-  } = api.exercises.createExercise.useMutation({
-    onSuccess: (data, variables) => {
-      setCreatedName(variables.name);
-      setShowCreatedDialog(true);
-      setSimilarExercises([]);
-      setPendingExercise(null);
-      form.reset();
-      setLocalError(null);
-      if (onExerciseCreated) {
-        onExerciseCreated();
-      }
-    },
-    onError: (error) => {
-      setLocalError(error.message);
-    },
-  });
+  const { mutate: createExercise, isPending: isCreating } =
+    api.exercises.createExercise.useMutation({
+      onSuccess: (data, variables) => {
+        setCreatedName(variables.name);
+        setShowCreatedDialog(true);
+        setSimilarExercises([]);
+        setPendingExercise(null);
+        form.reset();
+        setLocalError(null);
+        if (onExerciseCreated) {
+          onExerciseCreated();
+        }
+      },
+      onError: (error) => {
+        setLocalError(error.message);
+      },
+    });
 
   const similarQuery = api.exercises.getSimilarExercises.useQuery(
     similarityInput,

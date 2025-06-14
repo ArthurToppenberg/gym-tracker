@@ -24,6 +24,7 @@ model Exercise {
   createdById String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  records Record[]
 
   @@schema("public")
 }
@@ -36,6 +37,26 @@ enum ExerciseVariation {
   BODYWEIGHT
   ELASTIC_BAND
   BAR
+
+  @@schema("public")
+}
+
+model Record {
+  id String @id @default(cuid())
+  exerciseId String
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  sets Int 
+  startReps Int 
+  endReps Int 
+  startWeight Float 
+  endWeight Float 
+
+  isWarmup Boolean @default(false)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@schema("public")
 }
