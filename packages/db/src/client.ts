@@ -16,5 +16,5 @@ export const db: PrismaClient = globalForPrisma.prisma ?? createPrismaClient();
 
 if (env.NODE_ENV !== "production") globalForPrisma.prisma = db;
 
-export { ExerciseVariation } from "@prisma/client";
-export type { User, Exercise } from "@prisma/client";
+export * from "@prisma/client";
+export type * from "@prisma/client";

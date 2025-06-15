@@ -21,7 +21,7 @@ const items = [
     icon: LayoutDashboard,
   },
   {
-    title: "Track",
+    title: "Record",
     url: "/record",
     icon: ChartLine,
   },

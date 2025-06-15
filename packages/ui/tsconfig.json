@@ -1,5 +1,8 @@
 {
   "extends": "../../base.json",
   "include": ["src", "generated"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "lib": ["dom", "esnext"]
+  }
 }

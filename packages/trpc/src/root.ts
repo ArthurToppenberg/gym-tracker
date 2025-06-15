@@ -1,4 +1,5 @@
 import { exercisesRouter } from "./routers/exercises/_router";
+import { resultsRouter } from "./routers/results/_router";
 import { createCallerFactory, createTRPCRouter } from "./trpc";
 
 /**
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from "./trpc";
  */
 export const appRouter = createTRPCRouter({
   exercises: exercisesRouter,
+  results: resultsRouter,
 });
 
 // export type definition of API
