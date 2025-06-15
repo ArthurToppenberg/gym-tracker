@@ -274,7 +274,7 @@ const CreateRecord = () => {
                   <FormLabel>Start Reps</FormLabel>
                   <FormControl>
                     <SliderWithCustom
-                      min={1}
+                      min={4}
                       max={12}
                       step={1}
                       value={field.value}
@@ -308,7 +308,7 @@ const CreateRecord = () => {
                   </div>
                   <FormControl>
                     <SliderWithCustom
-                      min={1}
+                      min={4}
                       max={12}
                       step={1}
                       value={field.value}
