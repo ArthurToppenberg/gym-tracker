@@ -29,7 +29,7 @@ export const ExerciseList = ({ exercises }: ExerciseListProps) => {
         <CardTitle>Exercises</CardTitle>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="max-h-96 overflow-x-auto">
+        <ScrollArea className="max-h-96 overflow-x-auto overflow-y-auto">
           <Table className="min-w-full">
             <TableHeader className="bg-background">
               <TableRow>

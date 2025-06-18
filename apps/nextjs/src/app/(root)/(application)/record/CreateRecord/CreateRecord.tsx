@@ -26,6 +26,7 @@ import { CustomSetsDialog } from "./CustomSetsDialog";
 import { SliderWithCustom } from "./SliderWithCustom";
 import DeltaIndicator from "./DeltaIndicator";
 import { useDebounce } from "@gym/ui/hooks/use-debounce";
+import { toast } from "@gym/ui/components/sonner";
 
 const SET_OPTIONS = [2, 3, 4];
 const MIN_SETS = 1;
@@ -42,18 +43,22 @@ const formSchema = z.object({
 
 type ExerciseOption = ComboboxOption & { variation?: string };
 
-const CreateRecord = () => {
+interface CreateRecordProps {
+  onSuccess?: () => void;
+}
+
+const CreateRecord = ({ onSuccess }: CreateRecordProps) => {
   const [exerciseNameQuery, setExerciseNameQuery] = useState<
     string | undefined
   >(undefined);
   const [customSets, setCustomSets] = useState<number | null>(null);
   const [showCustomDialog, setShowCustomDialog] = useState(false);
+  const createRecordMutation = api.record.createRecord.useMutation();
 
   const debouncedExerciseNameQuery = useDebounce(exerciseNameQuery, 300);
 
   const getExercisesQuery = api.exercises.getExercises.useQuery({
     queryName: debouncedExerciseNameQuery,
-    limit: 100,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -71,6 +76,17 @@ const CreateRecord = () => {
 
   const handleFormSubmit = (values: z.infer<typeof formSchema>) => {
     console.log("Form submitted with values:", values);
+
+    createRecordMutation.mutate(values, {
+      onSuccess: () => {
+        toast.success("Record created successfully");
+        form.reset();
+        onSuccess?.();
+      },
+      onError: () => {
+        toast.error(`Failed to create record: ${createRecordMutation.error}`);
+      },
+    });
   };
 
   return (
