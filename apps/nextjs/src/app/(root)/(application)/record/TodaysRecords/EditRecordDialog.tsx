@@ -41,7 +41,7 @@ const EditRecordDialog: React.FC<EditRecordDialogProps> = ({
   onSearchChange,
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    <DialogContent className="max-h-[95vh] overflow-y-auto sm:max-h-none sm:overflow-y-visible">
+    <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-h-none sm:overflow-y-visible">
       <DialogHeader>
         <DialogTitle>Edit Record</DialogTitle>
       </DialogHeader>
