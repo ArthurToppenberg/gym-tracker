@@ -13,12 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
-import { Badge } from "@gym/ui/components/badge";
 import { Button } from "@gym/ui/components/button";
 import { CustomSetsDialog } from "../CreateRecord/CustomSetsDialog";
 import { SliderWithCustom } from "../CreateRecord/SliderWithCustom";
 import DeltaIndicator from "../CreateRecord/DeltaIndicator";
-import { useDebounce } from "@gym/ui/hooks/use-debounce";
 
 export const SET_OPTIONS = [2, 3, 4];
 export const MIN_SETS = 1;
@@ -70,7 +68,6 @@ const RecordsForm = ({
   );
   const [showCustomDialog, setShowCustomDialog] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const debouncedSearchValue = useDebounce(searchValue, 300);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -306,19 +303,18 @@ const RecordsForm = ({
             </FormItem>
           )}
         />
-        <div className="flex gap-4">
+        <div className="mt-4 grid grid-cols-[auto_1fr] gap-4">
           {onCancel && (
             <Button
               type="button"
               variant="outline"
-              className="mt-4 w-1/4"
               onClick={onCancel}
               disabled={disabled}
             >
               {cancelLabel}
             </Button>
           )}
-          <Button type="submit" className="mt-4 w-full" disabled={disabled}>
+          <Button type="submit" disabled={disabled} className="col-start-2">
             {submitLabel}
           </Button>
         </div>

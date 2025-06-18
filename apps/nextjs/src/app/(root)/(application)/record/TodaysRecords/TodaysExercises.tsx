@@ -22,8 +22,8 @@ import { toast } from "@gym/ui/components/sonner";
 import DeleteRecordDialog from "./DeleteRecordDialog";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@gym/trpc/server";
-import RecordsForm, { formSchema } from "../components/RecordsForm";
-import type { ExerciseOption } from "../components/RecordsForm";
+import RecordsForm from "../components/RecordsForm";
+import type { formSchema, ExerciseOption } from "../components/RecordsForm";
 import {
   Dialog,
   DialogContent,
@@ -182,7 +182,7 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
             ))}
             {todaysRecords.length === 0 && (
               <p className="text-muted-foreground py-4 text-sm">
-                You haven't done any exercises today
+                You haven&apos;t done any exercises today
               </p>
             )}
           </Accordion>
@@ -224,30 +224,26 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
               onCancel={() => setEditDialogOpen(false)}
               onSearchChange={setExerciseNameQuery}
               searchLoading={getExercisesQuery.isFetching}
-              renderOption={(option) => {
-                const exercise = option as ExerciseOption;
-                return (
+              renderOption={(exercise) => (
+                <span className="flex items-center gap-2">
+                  <span>{exercise.label}</span>
+                  {exercise.variation && (
+                    <Badge variant="secondary">{exercise.variation}</Badge>
+                  )}
+                </span>
+              )}
+              renderSelected={(exercise) =>
+                exercise ? (
                   <span className="flex items-center gap-2">
                     <span>{exercise.label}</span>
                     {exercise.variation && (
                       <Badge variant="secondary">{exercise.variation}</Badge>
                     )}
                   </span>
-                );
-              }}
-              renderSelected={(option) => {
-                const exercise = option as ExerciseOption | undefined;
-                return option ? (
-                  <span className="flex items-center gap-2">
-                    <span>{exercise?.label}</span>
-                    {exercise?.variation && (
-                      <Badge variant="secondary">{exercise.variation}</Badge>
-                    )}
-                  </span>
                 ) : (
                   "Select exercise..."
-                );
-              }}
+                )
+              }
               submitLabel="Save"
               cancelLabel="Cancel"
             />

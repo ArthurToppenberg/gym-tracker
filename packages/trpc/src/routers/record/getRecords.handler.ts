@@ -26,6 +26,10 @@ export const getRecordsHandler = async ({
       endReps: true,
       startWeight: true,
       endWeight: true,
+      createdAt: true,
+    },
+    orderBy: {
+      createdAt: "asc",
     },
   });
 

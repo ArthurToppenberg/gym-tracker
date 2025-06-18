@@ -6,33 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@gym/ui/components/card";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@gym/ui/components/form";
-import { ComboBox, type ComboboxOption } from "@gym/ui/components/combo-box";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { api } from "@gym/trpc/react";
 import { useState } from "react";
 import { Badge } from "@gym/ui/components/badge";
-import { Button } from "@gym/ui/components/button";
-import { CustomSetsDialog } from "./CustomSetsDialog";
-import { SliderWithCustom } from "./SliderWithCustom";
-import DeltaIndicator from "./DeltaIndicator";
 import { useDebounce } from "@gym/ui/hooks/use-debounce";
 import { toast } from "@gym/ui/components/sonner";
 import RecordsForm, { formSchema } from "../components/RecordsForm";
 import type { ExerciseOption } from "../components/RecordsForm";
-
-const SET_OPTIONS = [2, 3, 4];
-const MIN_SETS = 1;
-const MAX_SETS = 10;
 
 interface CreateRecordProps {
   onSuccess?: () => void;
@@ -68,17 +49,17 @@ const CreateRecord = ({ onSuccess }: CreateRecordProps) => {
       <CardContent>
         <RecordsForm
           data={
-            (getExercisesQuery.data?.items.map((exercise) => ({
+            getExercisesQuery.data?.items.map((exercise) => ({
               value: exercise.id,
               label: exercise.name,
               variation: exercise.variation,
-            })) ?? []) as ExerciseOption[]
+            })) ?? []
           }
           onSubmit={handleSubmit}
           onSearchChange={setExerciseNameQuery}
           searchLoading={getExercisesQuery.isFetching}
           renderOption={(option) => {
-            const exercise = option as ExerciseOption;
+            const exercise = option;
             return (
               <span className="flex items-center gap-2">
                 <span>{exercise.label}</span>
@@ -89,11 +70,11 @@ const CreateRecord = ({ onSuccess }: CreateRecordProps) => {
             );
           }}
           renderSelected={(option) => {
-            const exercise = option as ExerciseOption | undefined;
-            return option ? (
+            const exercise = option;
+            return exercise ? (
               <span className="flex items-center gap-2">
-                <span>{exercise?.label}</span>
-                {exercise?.variation && (
+                <span>{exercise.label}</span>
+                {exercise.variation && (
                   <Badge variant="secondary">{exercise.variation}</Badge>
                 )}
               </span>
