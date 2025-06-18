@@ -16,23 +16,16 @@ import {
 } from "@gym/ui/components/card";
 import { Button } from "@gym/ui/components/button";
 import { Trash2, Pencil } from "lucide-react";
-import DeltaIndicator from "../CreateRecord/DeltaIndicator";
 import { api } from "@gym/trpc/react";
 import { toast } from "@gym/ui/components/sonner";
 import DeleteRecordDialog from "./DeleteRecordDialog";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@gym/trpc/server";
-import RecordsForm from "../components/RecordsForm";
 import type { formSchema, ExerciseOption } from "../components/RecordsForm";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@gym/ui/components/dialog";
 import { useDebounce } from "@gym/ui/hooks/use-debounce";
 import type { z } from "zod";
 import RecordsItem from "./RecordsItem";
+import EditRecord from "./EditRecordDialog";
 
 type Record = inferRouterOutputs<AppRouter>["record"]["getRecords"][number] & {
   exerciseId: string;
@@ -181,59 +174,22 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
         onConfirm={confirmDelete}
         recordId={selectedRecordId ?? ""}
       />
-      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Edit Record</DialogTitle>
-          </DialogHeader>
-          {selectedEditRecord && (
-            <RecordsForm
-              data={
-                (getExercisesQuery.data?.items.map((exercise) => ({
-                  value: exercise.id,
-                  label: exercise.name,
-                  variation: exercise.variation,
-                })) ?? []) as ExerciseOption[]
-              }
-              initialValues={{
-                id: selectedEditRecord.id,
-                exercise: selectedEditRecord.exerciseId ?? "",
-                sets: selectedEditRecord.sets,
-                startWeight: selectedEditRecord.startWeight,
-                endWeight: selectedEditRecord.endWeight,
-                startReps: selectedEditRecord.startReps,
-                endReps: selectedEditRecord.endReps,
-              }}
-              onSubmit={handleEditSubmit}
-              onCancel={() => setEditDialogOpen(false)}
-              onSearchChange={setExerciseNameQuery}
-              searchLoading={getExercisesQuery.isFetching}
-              renderOption={(exercise) => (
-                <span className="flex items-center gap-2">
-                  <span>{exercise.label}</span>
-                  {exercise.variation && (
-                    <Badge variant="secondary">{exercise.variation}</Badge>
-                  )}
-                </span>
-              )}
-              renderSelected={(exercise) =>
-                exercise ? (
-                  <span className="flex items-center gap-2">
-                    <span>{exercise.label}</span>
-                    {exercise.variation && (
-                      <Badge variant="secondary">{exercise.variation}</Badge>
-                    )}
-                  </span>
-                ) : (
-                  "Select exercise..."
-                )
-              }
-              submitLabel="Save"
-              cancelLabel="Cancel"
-            />
-          )}
-        </DialogContent>
-      </Dialog>
+      <EditRecord
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        record={selectedEditRecord}
+        exerciseOptions={
+          (getExercisesQuery.data?.items.map((exercise) => ({
+            value: exercise.id,
+            label: exercise.name,
+            variation: exercise.variation,
+          })) ?? []) as ExerciseOption[]
+        }
+        loading={getExercisesQuery.isFetching}
+        onSubmit={handleEditSubmit}
+        onCancel={() => setEditDialogOpen(false)}
+        onSearchChange={setExerciseNameQuery}
+      />
     </Card>
   );
 };

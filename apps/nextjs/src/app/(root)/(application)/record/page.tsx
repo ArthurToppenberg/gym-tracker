@@ -3,11 +3,11 @@ import { api, HydrateClient } from "@gym/trpc/server";
 import RecordPage from "./recordPage";
 
 const Page = async () => {
-  void (await api.exercises.getExercises.prefetch({
+  await api.exercises.getExercises.prefetch({
     queryName: undefined, // undefined to match query from client
-  }));
+  });
 
-  void api.record.getRecords.prefetch({
+  await api.record.getRecords.prefetch({
     startDate: dayjs().startOf("day").toISOString(),
     endDate: dayjs().endOf("day").toISOString(),
   });
