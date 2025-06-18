@@ -17,7 +17,7 @@ const ExercisePage = () => {
           void getExercisesQuerry.refetch();
         }}
       />
-      {session.data?.user.role === "ADMIN" && (
+      {session?.data?.user?.role === "ADMIN" && (
         <ExercisesCreate
           onExerciseCreated={() => {
             void getExercisesQuerry.refetch();
