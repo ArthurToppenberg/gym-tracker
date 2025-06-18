@@ -1,16 +1,23 @@
-import { Button } from "@gym/ui/components/button";
-import { signOut } from "next-auth/react";
+"use client";
 
-export default async function Home() {
+import { SidebarUser } from "./(sidebar)/SidebarUser";
+import { useSession } from "next-auth/react";
+
+const Home = () => {
+  const session = useSession();
+  const user = session.data?.user;
+
   return (
-    <div>
-      <Button
-        onClick={() => {
-          signOut;
+    <div className="flex h-screen flex-col items-center justify-center px-[50%]">
+      <SidebarUser
+        user={{
+          name: user?.name ?? "",
+          email: user?.email ?? "",
+          avatar: user?.image ?? "",
         }}
-      >
-        Sign Out
-      </Button>
+      />
     </div>
   );
-}
+};
+
+export default Home;
