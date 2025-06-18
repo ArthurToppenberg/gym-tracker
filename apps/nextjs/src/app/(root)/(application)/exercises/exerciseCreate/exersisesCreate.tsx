@@ -32,7 +32,6 @@ import {
   SelectValue,
 } from "@gym/ui/components/select";
 import type { ExerciseVariation } from "./types";
-import { useSession } from "next-auth/react";
 
 interface ExercisesCreateProps {
   onExerciseCreated?: () => void;
