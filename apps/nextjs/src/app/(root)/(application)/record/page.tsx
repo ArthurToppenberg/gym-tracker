@@ -4,7 +4,7 @@ import RecordPage from "./recordPage";
 
 const Page = async () => {
   void (await api.exercises.getExercises.prefetch({
-    queryName: undefined,
+    queryName: undefined, // undefined to match query from client
   }));
 
   void api.record.getRecords.prefetch({
