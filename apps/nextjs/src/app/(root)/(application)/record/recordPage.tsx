@@ -5,7 +5,6 @@ import CreateRecord from "./CreateRecord/CreateRecord";
 import Header from "./components/Header";
 import dayjs from "dayjs";
 import { api } from "@gym/trpc/react";
-import RelevantExercises from "./RelevantExercises";
 
 interface RecordPageProps {
   todaysDay: string;
@@ -26,7 +25,6 @@ const RecordPage = ({ todaysDay }: RecordPageProps) => {
           void todaysRecordsQuery.refetch();
         }}
       />
-      <RelevantExercises />
       <CreateRecord
         onSuccess={() => {
           void todaysRecordsQuery.refetch();
