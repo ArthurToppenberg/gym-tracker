@@ -82,10 +82,16 @@ const RecordsForm = ({
     mode: "onChange",
   });
 
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    await onSubmit(values);
+    form.reset();
+    setCustomSets(null);
+  };
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col gap-4"
       >
         <FormField
