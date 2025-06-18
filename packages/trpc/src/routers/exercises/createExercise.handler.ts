@@ -1,3 +1,4 @@
+import { TRPCError } from "@trpc/server";
 import type { ProtectedProcedureInput } from "../../helpers";
 import { ZCreateExerciseInput } from "./createExercise.schema";
 import { getExerciseSimilarity } from "@gym/db/utils";
@@ -6,8 +7,11 @@ export const createExerciseHandler = async ({
   ctx,
   input,
 }: ProtectedProcedureInput<typeof ZCreateExerciseInput>) => {
-  if (!ctx.session.user.id) {
-    throw new Error("User not found");
+  if (ctx.session.user.role !== "ADMIN") {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You are not authorized to create exercises",
+    });
   }
 
   const similarExercises = await getExerciseSimilarity(input.name);

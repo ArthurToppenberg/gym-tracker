@@ -3,8 +3,10 @@
 import { api } from "@gym/trpc/react";
 import { ExercisesCreate } from "./exerciseCreate/exersisesCreate";
 import { ExerciseList } from "./exerciseList/exersiseList";
+import { useSession } from "next-auth/react";
 
 const ExercisePage = () => {
+  const session = useSession();
   const getExercisesQuerry = api.exercises.getExercises.useQuery({});
 
   return (
@@ -15,11 +17,13 @@ const ExercisePage = () => {
           void getExercisesQuerry.refetch();
         }}
       />
-      <ExercisesCreate
-        onExerciseCreated={() => {
-          void getExercisesQuerry.refetch();
-        }}
-      />
+      {session.data?.user.role === "ADMIN" && (
+        <ExercisesCreate
+          onExerciseCreated={() => {
+            void getExercisesQuerry.refetch();
+          }}
+        />
+      )}
     </>
   );
 };

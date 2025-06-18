@@ -6,9 +6,15 @@ export const deleteExerciseHandler = async ({
   ctx,
   input,
 }: ProtectedProcedureInput<typeof ZDeleteExerciseInput>) => {
+  if (ctx.session.user.role !== "ADMIN") {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "You are not authorized to delete exercises",
+    });
+  }
+
   const { ids } = input;
 
-  //if a exercise has any records related then i cant be deleted
   const relatedRecords = await ctx.db.record.findMany({
     where: {
       exerciseId: { in: ids },

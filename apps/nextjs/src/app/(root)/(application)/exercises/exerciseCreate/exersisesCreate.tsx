@@ -41,7 +41,6 @@ interface ExercisesCreateProps {
 export const ExercisesCreate = ({
   onExerciseCreated,
 }: ExercisesCreateProps) => {
-  //TODO: make role check here.
   const [createdName, setCreatedName] = React.useState("");
   const [showCreatedDialog, setShowCreatedDialog] = React.useState(false);
   const [showSimilarDialog, setShowSimilarDialog] = React.useState(false);
