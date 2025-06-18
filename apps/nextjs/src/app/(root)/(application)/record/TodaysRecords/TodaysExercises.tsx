@@ -22,8 +22,20 @@ import { toast } from "@gym/ui/components/sonner";
 import DeleteRecordDialog from "./DeleteRecordDialog";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@gym/trpc/server";
+import RecordsForm, { formSchema } from "../components/RecordsForm";
+import type { ExerciseOption } from "../components/RecordsForm";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@gym/ui/components/dialog";
+import { useDebounce } from "@gym/ui/hooks/use-debounce";
+import type { z } from "zod";
 
-type Record = inferRouterOutputs<AppRouter>["record"]["getRecords"][number];
+type Record = inferRouterOutputs<AppRouter>["record"]["getRecords"][number] & {
+  exerciseId: string;
+};
 
 interface TodaysRecordsProps {
   onDelete?: (id: string) => void;
@@ -32,13 +44,20 @@ interface TodaysRecordsProps {
 
 const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
   const deleteRecordMutation = api.record.deleteRecord.useMutation();
-
+  const createRecordMutation = api.record.createRecord.useMutation();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedEditRecord, setSelectedEditRecord] = useState<Record | null>(
     null,
   );
+  const [exerciseNameQuery, setExerciseNameQuery] = useState<
+    string | undefined
+  >(undefined);
+  const debouncedExerciseNameQuery = useDebounce(exerciseNameQuery, 300);
+  const getExercisesQuery = api.exercises.getExercises.useQuery({
+    queryName: debouncedExerciseNameQuery,
+  });
 
   const handleDelete = (id: string) => {
     setSelectedRecordId(id);
@@ -49,7 +68,6 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
   const handleEdit = (record: Record) => {
     setSelectedEditRecord(record);
     setEditDialogOpen(true);
-    // Placeholder: open edit dialog
   };
 
   const confirmDelete = (id: string) => {
@@ -68,6 +86,23 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
         },
         onError: (error) => {
           toast.error(error.message);
+        },
+      },
+    );
+  };
+
+  const handleEditSubmit = (values: z.infer<typeof formSchema>) => {
+    createRecordMutation.mutate(
+      { ...values, id: selectedEditRecord?.id },
+      {
+        onSuccess: () => {
+          toast.success("Record updated successfully");
+          setEditDialogOpen(false);
+          setSelectedEditRecord(null);
+          onDelete?.(values.id!); // triggers refetch
+        },
+        onError: (error) => {
+          toast.error(`Failed to update record: ${error.message}`);
         },
       },
     );
@@ -162,6 +197,63 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
         onConfirm={confirmDelete}
         recordId={selectedRecordId ?? ""}
       />
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Record</DialogTitle>
+          </DialogHeader>
+          {selectedEditRecord && (
+            <RecordsForm
+              data={
+                (getExercisesQuery.data?.items.map((exercise) => ({
+                  value: exercise.id,
+                  label: exercise.name,
+                  variation: exercise.variation,
+                })) ?? []) as ExerciseOption[]
+              }
+              initialValues={{
+                id: selectedEditRecord.id,
+                exercise: selectedEditRecord.exerciseId ?? "",
+                sets: selectedEditRecord.sets,
+                startWeight: selectedEditRecord.startWeight,
+                endWeight: selectedEditRecord.endWeight,
+                startReps: selectedEditRecord.startReps,
+                endReps: selectedEditRecord.endReps,
+              }}
+              onSubmit={handleEditSubmit}
+              onCancel={() => setEditDialogOpen(false)}
+              onSearchChange={setExerciseNameQuery}
+              searchLoading={getExercisesQuery.isFetching}
+              renderOption={(option) => {
+                const exercise = option as ExerciseOption;
+                return (
+                  <span className="flex items-center gap-2">
+                    <span>{exercise.label}</span>
+                    {exercise.variation && (
+                      <Badge variant="secondary">{exercise.variation}</Badge>
+                    )}
+                  </span>
+                );
+              }}
+              renderSelected={(option) => {
+                const exercise = option as ExerciseOption | undefined;
+                return option ? (
+                  <span className="flex items-center gap-2">
+                    <span>{exercise?.label}</span>
+                    {exercise?.variation && (
+                      <Badge variant="secondary">{exercise.variation}</Badge>
+                    )}
+                  </span>
+                ) : (
+                  "Select exercise..."
+                );
+              }}
+              submitLabel="Save"
+              cancelLabel="Cancel"
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };

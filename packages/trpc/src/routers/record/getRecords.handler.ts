@@ -14,6 +14,7 @@ export const getRecordsHandler = async ({
     },
     select: {
       id: true,
+      exerciseId: true,
       exercise: {
         select: {
           name: true,

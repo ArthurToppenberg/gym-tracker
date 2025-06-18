@@ -35,6 +35,7 @@ export interface ComboboxProps {
   searchLoading?: boolean;
   disableSearchFilter?: boolean;
   renderSelected?: (option: ComboboxOption | undefined) => React.ReactNode;
+  initialValue?: string;
 }
 
 export const ComboBox = ({
@@ -50,9 +51,12 @@ export const ComboBox = ({
   searchLoading = false,
   disableSearchFilter = false,
   renderSelected,
+  initialValue,
 }: ComboboxProps): React.JSX.Element => {
   const [open, setOpen] = React.useState(false);
-  const [internalValue, setInternalValue] = React.useState<string>("");
+  const [internalValue, setInternalValue] = React.useState<string>(
+    initialValue ?? ""
+  );
   const [searchValue, setSearchValue] = React.useState<string>("");
   const isControlled =
     typeof value !== "undefined" && typeof onChange === "function";
