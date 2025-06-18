@@ -83,7 +83,7 @@ const RecordsForm = ({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    await onSubmit(values);
+    onSubmit(values);
     form.reset();
     setCustomSets(null);
   };
