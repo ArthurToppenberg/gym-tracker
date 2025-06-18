@@ -32,6 +32,7 @@ import {
 } from "@gym/ui/components/dialog";
 import { useDebounce } from "@gym/ui/hooks/use-debounce";
 import type { z } from "zod";
+import RecordsItem from "./RecordsItem";
 
 type Record = inferRouterOutputs<AppRouter>["record"]["getRecords"][number] & {
   exerciseId: string;
@@ -129,35 +130,18 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="flex flex-col gap-4">
-                    <div className="grid grid-cols-3 gap-4 p-2">
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-start gap-2">
-                          <p className="text-muted-foreground text-sm">Reps</p>
-                          <DeltaIndicator
-                            startValue={exercise.startReps ?? 0}
-                            endValue={exercise.endReps ?? 0}
-                          />
-                        </div>
-                        <p className="font-medium">
-                          {exercise.startReps ?? 0} - {exercise.endReps ?? 0}
-                        </p>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-start gap-2">
-                          <p className="text-muted-foreground text-sm">
-                            Weight (kg)
-                          </p>
-                          <DeltaIndicator
-                            startValue={exercise.startWeight ?? 0}
-                            endValue={exercise.endWeight ?? 0}
-                          />
-                        </div>
-                        <p className="font-medium">
-                          {exercise.startWeight ?? 0} -{" "}
-                          {exercise.endWeight ?? 0}
-                        </p>
-                      </div>
-                      <div className="flex justify-end gap-2">
+                    <div className="grid grid-cols-1 gap-4 p-2 md:grid-cols-3">
+                      <RecordsItem
+                        label="Reps"
+                        startValue={exercise.startReps ?? 0}
+                        endValue={exercise.endReps ?? 0}
+                      />
+                      <RecordsItem
+                        label="Weight (kg)"
+                        startValue={exercise.startWeight ?? 0}
+                        endValue={exercise.endWeight ?? 0}
+                      />
+                      <div className="flex justify-start gap-2 md:justify-end">
                         <Button
                           variant="ghost"
                           size="icon"

@@ -1,6 +1,6 @@
 "use client";
 
-import TodaysRecords from "./TodaysRecords/TodaysExercises";
+import TodaysRecords from "./TodaysRecords/TodaysRecords";
 import CreateRecord from "./CreateRecord/CreateRecord";
 import Header from "./components/Header";
 import dayjs from "dayjs";
