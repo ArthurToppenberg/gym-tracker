@@ -83,8 +83,8 @@ const CreateRecord = ({ onSuccess }: CreateRecordProps) => {
         form.reset();
         onSuccess?.();
       },
-      onError: () => {
-        toast.error(`Failed to create record: ${createRecordMutation.error}`);
+      onError: (error) => {
+        toast.error(`Failed to create record: ${error.message}`);
       },
     });
   };

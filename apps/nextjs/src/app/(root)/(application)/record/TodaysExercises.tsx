@@ -21,15 +21,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@gym/ui/components/dropdown-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogDescription,
-  DialogClose,
-} from "@gym/ui/components/dialog";
 import { MoreVertical } from "lucide-react";
 import DeltaIndicator from "./CreateRecord/DeltaIndicator";
 import { api } from "@gym/trpc/react";
@@ -53,25 +44,25 @@ const TodaysExercises = () => {
     setDeleteDialogOpen(true);
   };
 
-  const confirmDelete = (id: string) => {
-    deleteRecordMutation.mutate(
-      {
+  const confirmDelete = async (id: string): Promise<void> => {
+    try {
+      await deleteRecordMutation.mutateAsync({
         ids: [id],
-      },
-      {
-        onSuccess: () => {
-          todaysRecordsQuery.refetch();
-          toast.success(
-            `${deleteRecordMutation.data?.deletedRecords} records deleted`,
-          );
-          setDeleteDialogOpen(false);
-          setSelectedRecordId(null);
-        },
-        onError: (error) => {
-          toast.error(error.message);
-        },
-      },
-    );
+      });
+
+      await todaysRecordsQuery.refetch();
+      toast.success(
+        `${deleteRecordMutation.data?.deletedRecords} records deleted`,
+      );
+      setDeleteDialogOpen(false);
+      setSelectedRecordId(null);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
   };
 
   return (
@@ -154,7 +145,7 @@ const TodaysExercises = () => {
           setSelectedRecordId(null);
         }}
         onConfirm={confirmDelete}
-        recordId={selectedRecordId || ""}
+        recordId={selectedRecordId ?? ""}
       />
     </Card>
   );

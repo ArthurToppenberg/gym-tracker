@@ -137,7 +137,7 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
           setSelectedRecordId(null);
         }}
         onConfirm={confirmDelete}
-        recordId={selectedRecordId || ""}
+        recordId={selectedRecordId ?? ""}
       />
     </Card>
   );

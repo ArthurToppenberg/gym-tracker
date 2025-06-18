@@ -23,13 +23,13 @@ const RecordPage = ({ todaysDay }: RecordPageProps) => {
       <TodaysRecords
         todaysRecords={todaysRecordsQuery.data ?? []}
         onDelete={() => {
-          todaysRecordsQuery.refetch();
+          void todaysRecordsQuery.refetch();
         }}
       />
       <RelevantExercises />
       <CreateRecord
         onSuccess={() => {
-          todaysRecordsQuery.refetch();
+          void todaysRecordsQuery.refetch();
         }}
       />
     </>
