@@ -67,7 +67,6 @@ const RecordsForm = ({
     initialValues?.sets ?? null,
   );
   const [showCustomDialog, setShowCustomDialog] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -105,7 +104,6 @@ const RecordsForm = ({
                   renderOption={renderOption}
                   renderSelected={renderSelected}
                   onSearchChange={(value) => {
-                    setSearchValue(value);
                     onSearchChange?.(value);
                   }}
                   initialValue={initialValues?.exercise}

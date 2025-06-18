@@ -6,14 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@gym/ui/components/card";
-import { z } from "zod";
+import type { z } from "zod";
 import { api } from "@gym/trpc/react";
 import { useState } from "react";
 import { Badge } from "@gym/ui/components/badge";
 import { useDebounce } from "@gym/ui/hooks/use-debounce";
 import { toast } from "@gym/ui/components/sonner";
-import RecordsForm, { formSchema } from "../components/RecordsForm";
-import type { ExerciseOption } from "../components/RecordsForm";
+import RecordsForm from "../components/RecordsForm";
+import type { formSchema } from "../components/RecordsForm";
 
 interface CreateRecordProps {
   onSuccess?: () => void;
