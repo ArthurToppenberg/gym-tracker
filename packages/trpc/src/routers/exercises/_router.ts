@@ -4,6 +4,7 @@ import {
   protectedProcedure,
 } from "../../trpc";
 import { ZCreateExerciseInput } from "./createExercise.schema";
+import { ZDeleteExerciseInput } from "./deleteExercise.schema";
 import { ZGetExercisesInput } from "./getExercises.schema";
 import { ZGetExerciseVariationsInput } from "./getExerciseVariations.schema";
 import { ZGetSimilarExercisesInput } from "./getSimilarExercises.schema";
@@ -48,6 +49,16 @@ export const exercisesRouter = createTRPCRouter({
       const handler = await importHandler(
         namespaced("getExerciseVariations"),
         () => import("./getExerciseVariations.handler")
+      );
+
+      return handler(opts);
+    }),
+  deleteExercise: protectedProcedure
+    .input(ZDeleteExerciseInput)
+    .mutation(async (opts) => {
+      const handler = await importHandler(
+        namespaced("deleteExercise"),
+        () => import("./deleteExercise.handler")
       );
 
       return handler(opts);

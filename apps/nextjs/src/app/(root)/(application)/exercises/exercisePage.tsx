@@ -9,7 +9,12 @@ const ExercisePage = () => {
 
   return (
     <>
-      <ExerciseList exercises={getExercisesQuerry?.data?.items ?? []} />
+      <ExerciseList
+        exercises={getExercisesQuerry?.data?.items ?? []}
+        onExerciseDeleted={() => {
+          void getExercisesQuerry.refetch();
+        }}
+      />
       <ExercisesCreate
         onExerciseCreated={() => {
           void getExercisesQuerry.refetch();

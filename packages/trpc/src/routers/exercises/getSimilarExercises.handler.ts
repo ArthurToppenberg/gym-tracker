@@ -6,13 +6,22 @@ export const getSimilarExercisesHandler = async ({
   ctx,
   input,
 }: ProtectedProcedureInput<typeof ZGetSimilarExercisesInput>) => {
-  const mostSimilarExercises = await getExerciseSimilarity(input.name);
+  let mostSimilarExercises: Awaited<ReturnType<typeof getExerciseSimilarity>> =
+    [];
+  try {
+    const result = await getExerciseSimilarity(input.name);
+    if (Array.isArray(result)) {
+      mostSimilarExercises = result;
+    }
+  } catch (e) {
+    // Optionally log error here
+    mostSimilarExercises = [];
+  }
 
-  console.log(
-    `checking similarity for ${input.name}, mostSimilarExercises: ${mostSimilarExercises}`
-  );
-
-  if (mostSimilarExercises.length === 0) {
+  if (
+    !Array.isArray(mostSimilarExercises) ||
+    mostSimilarExercises.length === 0
+  ) {
     return {
       similarExersises: [],
     };
@@ -46,7 +55,7 @@ export const getSimilarExercisesHandler = async ({
     .filter((exercise) => exercise !== null);
 
   return {
-    similarExersises: mergedExercises ?? [],
+    similarExersises: Array.isArray(mergedExercises) ? mergedExercises : [],
   };
 };
 

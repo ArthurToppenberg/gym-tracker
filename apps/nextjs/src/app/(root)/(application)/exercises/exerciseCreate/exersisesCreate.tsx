@@ -32,6 +32,7 @@ import {
   SelectValue,
 } from "@gym/ui/components/select";
 import type { ExerciseVariation } from "./types";
+import { useSession } from "next-auth/react";
 
 interface ExercisesCreateProps {
   onExerciseCreated?: () => void;
@@ -40,6 +41,7 @@ interface ExercisesCreateProps {
 export const ExercisesCreate = ({
   onExerciseCreated,
 }: ExercisesCreateProps) => {
+  //TODO: make role check here.
   const [createdName, setCreatedName] = React.useState("");
   const [showCreatedDialog, setShowCreatedDialog] = React.useState(false);
   const [showSimilarDialog, setShowSimilarDialog] = React.useState(false);
@@ -66,8 +68,14 @@ export const ExercisesCreate = ({
       return z.object({
         name: z
           .string()
-          .min(4, { message: "Exercise name must be at least 4 characters." })
-          .max(20, { message: "Exercise name must be at most 20 characters." }),
+          .min(1, { message: "Exercise name is required." })
+          .max(100, {
+            message: "Exercise name must be at most 100 characters.",
+          })
+          .regex(/^[\w\s\-]+$/, {
+            message:
+              "Name can only contain letters, numbers, spaces, dashes, and underscores.",
+          }),
         variation: z.enum(variations as [string, ...string[]]),
       });
     }

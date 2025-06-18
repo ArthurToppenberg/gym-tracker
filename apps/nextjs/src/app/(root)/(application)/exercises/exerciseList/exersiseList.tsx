@@ -17,12 +17,65 @@ import {
 } from "@gym/ui/components/table";
 import type { inferRouterOutputs } from "@trpc/server";
 import { ScrollArea } from "@gym/ui/components/scroll-area";
+import { Cog, EllipsisVertical } from "lucide-react";
+import { Button } from "@gym/ui/components/button";
+import SettingsDialog from "./SettingsDialog";
+import { useState } from "react";
+import { api } from "@gym/trpc/react";
+import { toast } from "@gym/ui/components/sonner";
 
 interface ExerciseListProps {
   exercises: inferRouterOutputs<AppRouter>["exercises"]["getExercises"]["items"];
+  onExerciseDeleted?: () => void;
+  onExerciseEdited?: () => void;
 }
 
-export const ExerciseList = ({ exercises }: ExerciseListProps) => {
+export const ExerciseList = ({
+  exercises,
+  onExerciseDeleted,
+  onExerciseEdited,
+}: ExerciseListProps) => {
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState<
+    ExerciseListProps["exercises"][number] | null
+  >(null);
+
+  const deleteExerciseMutation = api.exercises.deleteExercise.useMutation();
+
+  const handleSettingsClick = (
+    exercise: ExerciseListProps["exercises"][number],
+  ) => {
+    setSelectedExercise(exercise);
+    setSettingsOpen(true);
+  };
+
+  const handleEdit = () => {
+    if (selectedExercise) {
+      setSettingsOpen(false);
+      onExerciseEdited?.();
+    }
+  };
+
+  const handleDelete = async () => {
+    if (selectedExercise) {
+      setSettingsOpen(false);
+      deleteExerciseMutation.mutate(
+        {
+          ids: [selectedExercise.id],
+        },
+        {
+          onSuccess: () => {
+            toast.success(`Deleted ${selectedExercise.name}`);
+            onExerciseDeleted?.();
+          },
+          onError: (error) => {
+            toast.error(error.message);
+          },
+        },
+      );
+    }
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -35,7 +88,9 @@ export const ExerciseList = ({ exercises }: ExerciseListProps) => {
               <TableRow>
                 <TableHead>Name</TableHead>
                 <TableHead>Variation</TableHead>
-                <TableHead>Last Updated</TableHead>
+                <TableHead className="flex items-center justify-center">
+                  <Cog size={16} />
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -46,10 +101,14 @@ export const ExerciseList = ({ exercises }: ExerciseListProps) => {
                       {exercise.name}
                     </TableCell>
                     <TableCell>{exercise.variation || "-"}</TableCell>
-                    <TableCell>
-                      {exercise.updatedAt
-                        ? new Date(exercise.updatedAt).toLocaleDateString()
-                        : "-"}
+                    <TableCell className="flex items-center justify-center">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => handleSettingsClick(exercise)}
+                      >
+                        <EllipsisVertical size={16} />
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))
@@ -63,6 +122,15 @@ export const ExerciseList = ({ exercises }: ExerciseListProps) => {
             </TableBody>
           </Table>
         </ScrollArea>
+        {selectedExercise && (
+          <SettingsDialog
+            open={settingsOpen}
+            onOpenChange={setSettingsOpen}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            exercise={selectedExercise}
+          />
+        )}
       </CardContent>
     </Card>
   );
