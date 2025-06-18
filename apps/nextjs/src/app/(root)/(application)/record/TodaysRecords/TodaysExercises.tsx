@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@gym/ui/components/card";
 import { Button } from "@gym/ui/components/button";
-import { Trash2 } from "lucide-react";
+import { Trash2, Pencil } from "lucide-react";
 import DeltaIndicator from "../CreateRecord/DeltaIndicator";
 import { api } from "@gym/trpc/react";
 import { toast } from "@gym/ui/components/sonner";
@@ -35,11 +35,21 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedRecordId, setSelectedRecordId] = useState<string | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedEditRecord, setSelectedEditRecord] = useState<Record | null>(
+    null,
+  );
 
   const handleDelete = (id: string) => {
     setSelectedRecordId(id);
     setDeleteDialogOpen(true);
     onDelete?.(id);
+  };
+
+  const handleEdit = (record: Record) => {
+    setSelectedEditRecord(record);
+    setEditDialogOpen(true);
+    // Placeholder: open edit dialog
   };
 
   const confirmDelete = (id: string) => {
@@ -112,7 +122,15 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
                           {exercise.endWeight ?? 0}
                         </p>
                       </div>
-                      <div className="flex justify-end">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          aria-label="Edit"
+                          onClick={() => handleEdit(exercise)}
+                        >
+                          <Pencil className="size-5" />
+                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"
@@ -127,6 +145,11 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
                 </AccordionContent>
               </AccordionItem>
             ))}
+            {todaysRecords.length === 0 && (
+              <p className="text-muted-foreground py-4 text-sm">
+                You haven't done any exercises today
+              </p>
+            )}
           </Accordion>
         </CardContent>
       </CardHeader>

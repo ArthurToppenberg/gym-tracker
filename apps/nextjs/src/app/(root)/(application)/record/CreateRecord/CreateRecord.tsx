@@ -256,6 +256,32 @@ const CreateRecord = ({ onSuccess }: CreateRecordProps) => {
             />
             <FormField
               control={form.control}
+              name="startReps"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Start Reps</FormLabel>
+                  <FormControl>
+                    <SliderWithCustom
+                      min={4}
+                      max={12}
+                      step={1}
+                      value={field.value}
+                      onChange={(val) => {
+                        field.onChange(val);
+                        form.setValue("endReps", val, {
+                          shouldValidate: true,
+                          shouldDirty: true,
+                        });
+                      }}
+                      units="reps"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="endWeight"
               render={({ field }) => (
                 <FormItem>
@@ -276,32 +302,6 @@ const CreateRecord = ({ onSuccess }: CreateRecordProps) => {
                       value={field.value}
                       onChange={field.onChange}
                       units="kg"
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red-500" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="startReps"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Start Reps</FormLabel>
-                  <FormControl>
-                    <SliderWithCustom
-                      min={4}
-                      max={12}
-                      step={1}
-                      value={field.value}
-                      onChange={(val) => {
-                        field.onChange(val);
-                        form.setValue("endReps", val, {
-                          shouldValidate: true,
-                          shouldDirty: true,
-                        });
-                      }}
-                      units="reps"
                     />
                   </FormControl>
                   <FormMessage className="text-red-500" />
