@@ -7,14 +7,16 @@ import dayjs from "dayjs";
 import { api } from "@gym/trpc/react";
 
 interface RecordPageProps {
-  todaysDay: string;
+  date: Date;
 }
 
-const RecordPage = ({ todaysDay }: RecordPageProps) => {
+const RecordPage = ({ date }: RecordPageProps) => {
   const todaysRecordsQuery = api.record.getRecords.useQuery({
-    startDate: dayjs().startOf("day").toISOString(),
-    endDate: dayjs().endOf("day").toISOString(),
+    startDate: dayjs(date).startOf("day").toISOString(),
+    endDate: dayjs(date).endOf("day").toISOString(),
   });
+
+  const todaysDay = dayjs(date).format("dddd");
 
   return (
     <>
