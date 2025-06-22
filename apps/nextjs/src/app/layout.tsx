@@ -1,3 +1,5 @@
+"use client";
+
 import "@gym/ui/styles/globals.css";
 
 import { type Metadata } from "next";
