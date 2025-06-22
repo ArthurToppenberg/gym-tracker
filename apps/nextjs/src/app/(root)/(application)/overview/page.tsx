@@ -11,9 +11,10 @@ const Page = async () => {
   });
 
   return (
-    <HydrateClient>
-      <OverviewPage />
-    </HydrateClient>
+    // <HydrateClient>
+    //   <OverviewPage />
+    // </HydrateClient>
+    <p>Hello</p>
   );
 };
 

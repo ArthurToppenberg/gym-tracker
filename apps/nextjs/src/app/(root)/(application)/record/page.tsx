@@ -15,9 +15,10 @@ const Page = async () => {
   const todaysDay = dayjs().format("dddd");
 
   return (
-    <HydrateClient>
-      <RecordPage todaysDay={todaysDay} />
-    </HydrateClient>
+    //   <HydrateClient>
+    //   <RecordPage todaysDay={todaysDay} />
+    // </HydrateClient>
+    <p>Hello</p>
   );
 };
 
