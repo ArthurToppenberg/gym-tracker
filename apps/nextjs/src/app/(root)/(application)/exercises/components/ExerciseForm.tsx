@@ -152,12 +152,17 @@ export const ExerciseForm = ({
                       <SelectValue placeholder="Select a variation" />
                     </SelectTrigger>
                     <SelectContent>
-                      {variations?.map((variation: ExerciseVariation) => (
-                        <SelectItem key={variation} value={variation}>
-                          {variation.charAt(0) +
-                            variation.slice(1).toLowerCase().replace("_", " ")}
-                        </SelectItem>
-                      ))}
+                      {variations?.map((variation: ExerciseVariation) =>
+                        variation ? (
+                          <SelectItem key={variation} value={variation}>
+                            {variation.charAt(0) +
+                              variation
+                                .slice(1)
+                                .toLowerCase()
+                                .replace("_", " ")}
+                          </SelectItem>
+                        ) : null,
+                      )}
                     </SelectContent>
                   </Select>
                 )}
