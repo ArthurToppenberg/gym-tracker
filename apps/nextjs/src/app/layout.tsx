@@ -1,5 +1,3 @@
-"use client";
-
 import "@gym/ui/styles/globals.css";
 
 import { type Metadata } from "next";
@@ -20,8 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          {/* {children} */}
-          <p>Hello</p>
+          {children}
           <MotivationOverlay />
         </Providers>
       </body>
