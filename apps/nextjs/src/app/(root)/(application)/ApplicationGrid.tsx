@@ -9,7 +9,7 @@ const ApplicationGrid = ({ children }: ApplicationGridProps) => {
   return (
     <SidebarProvider>
       <div className="flex w-full flex-row">
-        <AppSidebar />
+        {/* <AppSidebar /> */}
         <div className="flex w-full flex-col">{children}</div>
       </div>
     </SidebarProvider>
