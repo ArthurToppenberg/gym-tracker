@@ -1,3 +1,5 @@
+"use client";
+
 import { TRPCReactProvider } from "@gym/trpc/react";
 import { Toaster } from "@gym/ui/components/sonner";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
