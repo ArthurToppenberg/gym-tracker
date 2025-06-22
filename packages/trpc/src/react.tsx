@@ -6,6 +6,7 @@ import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 import SuperJSON from "superjson";
 import { useState } from "react";
+
 import { type AppRouter } from "./root";
 import { createQueryClient } from "./query-client";
 
@@ -29,6 +30,7 @@ export const api = createTRPCReact<AppRouter>();
  * @example type HelloInput = RouterInputs['example']['hello']
  */
 export type RouterInputs = inferRouterInputs<AppRouter>;
+
 /**
  * Inference helper for outputs.
  *
@@ -59,6 +61,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
       ],
     })
   );
+
   return (
     <QueryClientProvider client={queryClient}>
       <api.Provider client={trpcClient} queryClient={queryClient}>
@@ -67,6 +70,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
     </QueryClientProvider>
   );
 }
+
 function getBaseUrl() {
   if (typeof window !== "undefined") return window.location.origin;
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;

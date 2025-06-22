@@ -4,12 +4,12 @@ import { SessionProvider } from "next-auth/react";
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <TRPCReactProvider>
-      <SessionProvider>
+    <SessionProvider>
+      <TRPCReactProvider>
         {children}
         <Toaster />
-      </SessionProvider>
-    </TRPCReactProvider>
+      </TRPCReactProvider>
+    </SessionProvider>
   );
 };
 
