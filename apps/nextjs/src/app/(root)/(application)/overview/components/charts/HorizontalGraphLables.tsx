@@ -5,6 +5,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Cell,
   LabelList,
   XAxis,
   YAxis,
@@ -26,33 +27,9 @@ import {
 import type { ChartConfig } from "@gym/ui/components/chart";
 import { useMemo } from "react";
 import dayjs from "dayjs";
+import { Skeleton } from "@gym/ui/components/skeleton";
 
-export const description = "A bar chart with a custom label";
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-];
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "var(--chart-2)",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "var(--chart-2)",
-  },
-  label: {
-    color: "var(--background)",
-  },
-} satisfies ChartConfig;
-
-interface HorizontalGraphLablesProps {
+export interface HorizontalGraphLablesProps {
   title: string;
   description: string;
   data: {
@@ -60,13 +37,31 @@ interface HorizontalGraphLablesProps {
     name: string;
     value: number;
   }[];
+  valueLabel: string;
+  isLoading?: boolean;
 }
 
 const HorizontalGraphLables = ({
   title,
   description,
   data,
+  valueLabel,
+  isLoading,
 }: HorizontalGraphLablesProps) => {
+  const chartConfig = {
+    value: {
+      label: valueLabel,
+      color: "var(--chart-1)",
+    },
+    secondary: {
+      label: "secondary",
+      color: "var(--chart-2)",
+    },
+    label: {
+      color: "var(--background)",
+    },
+  } satisfies ChartConfig;
+
   const { startWeekDay, endWeekDay } = useMemo(() => {
     if (!data || data.length === 0) {
       return { startWeekDay: null, endWeekDay: null };
@@ -86,10 +81,43 @@ const HorizontalGraphLables = ({
     };
   }, [data]);
 
+  const chartData = useMemo(() => {
+    return data.map((item) => ({
+      day: dayjs(item.date).format("ddd"),
+      date: item.date,
+      name: item.name,
+      value: item.value,
+    }));
+  }, [data]);
+
+  if (isLoading) {
+    return (
+      <Card>
+        <CardHeader>
+          <Skeleton className="h-7 w-1/2" />
+          <Skeleton className="h-4 w-3/4" />
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[250px] w-full flex-col gap-4">
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+            <Skeleton className="h-8 w-full" />
+          </div>
+        </CardContent>
+        <CardFooter className="flex-col items-start gap-2 text-sm">
+          <Skeleton className="h-4 w-1/3" />
+          <Skeleton className="h-4 w-1/2" />
+        </CardFooter>
+      </Card>
+    );
+  }
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="flex flex-row items-center gap-2">
+        <CardTitle className="flex flex-col gap-2 sm:flex-row sm:items-center">
           {title}
           <span className="text-muted-foreground flex flex-row items-center gap-1 text-xs">
             <Clock className="h-3 w-3" />
@@ -110,34 +138,38 @@ const HorizontalGraphLables = ({
           >
             <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="month"
+              dataKey="day"
               type="category"
               tickLine={false}
-              tickMargin={10}
+              tickMargin={0}
               axisLine={false}
-              tickFormatter={(value: string) => value.slice(0, 3)}
-              hide
             />
-            <XAxis dataKey="desktop" type="number" hide />
+            <XAxis dataKey="value" type="number" hide />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar
-              dataKey="desktop"
-              layout="vertical"
-              fill="var(--color-desktop)"
-              radius={4}
-            >
+            <Bar dataKey="value" layout="vertical" radius={4}>
+              {chartData.map((entry) => (
+                <Cell
+                  key={`cell-${entry.date.toString()}`}
+                  fill={
+                    dayjs(entry.date).isSame(dayjs(), "day")
+                      ? "var(--color-value)"
+                      : "var(--color-secondary)"
+                  }
+                  radius={4}
+                />
+              ))}
               <LabelList
-                dataKey="month"
+                dataKey="name"
                 position="insideLeft"
                 offset={8}
                 className="fill-(--color-label)"
                 fontSize={12}
               />
               <LabelList
-                dataKey="desktop"
+                dataKey="value"
                 position="right"
                 offset={8}
                 className="fill-foreground"
