@@ -1,6 +1,6 @@
 "use client";
 
-import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchStreamLink, loggerLink } from "@trpc/client";
 import { createTRPCReact } from "@trpc/react-query";
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
@@ -9,18 +9,6 @@ import { useState } from "react";
 
 import { type AppRouter } from "./root";
 import { createQueryClient } from "./query-client";
-
-let clientQueryClientSingleton: QueryClient | undefined = undefined;
-const getQueryClient = () => {
-  if (typeof window === "undefined") {
-    // Server: always make a new query client
-    return createQueryClient();
-  }
-  // Browser: use singleton pattern to keep the same query client
-  clientQueryClientSingleton ??= createQueryClient();
-
-  return clientQueryClientSingleton;
-};
 
 export const api = createTRPCReact<AppRouter>();
 
@@ -39,7 +27,7 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
-  const queryClient = getQueryClient();
+  const [queryClient] = useState(() => createQueryClient());
 
   const [trpcClient] = useState(() =>
     api.createClient({
@@ -53,9 +41,9 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
           headers: () => {
-            const headers = new Headers();
-            headers.set("x-trpc-source", "nextjs-react");
-            return headers;
+            return {
+              "x-trpc-source": "nextjs-react",
+            };
           },
         }),
       ],
