@@ -38,7 +38,10 @@ export type RouterInputs = inferRouterInputs<AppRouter>;
  */
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-export function TRPCReactProvider(props: { children: React.ReactNode }) {
+export function TRPCReactProvider(props: {
+  children: React.ReactNode;
+  headers: HeadersInit;
+}) {
   const queryClient = getQueryClient();
 
   const [trpcClient] = useState(() =>
@@ -53,9 +56,15 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
           headers: () => {
-            const headers = new Headers();
+            const headers = new Headers(props.headers);
             headers.set("x-trpc-source", "nextjs-react");
-            return headers;
+
+            const heads = new Map<string, string>();
+            headers.forEach((value, key) => {
+              heads.set(key, value);
+            });
+
+            return Object.fromEntries(heads);
           },
         }),
       ],

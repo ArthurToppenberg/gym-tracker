@@ -4,11 +4,20 @@ import { TRPCReactProvider } from "@gym/trpc/react";
 import { Toaster } from "@gym/ui/components/sonner";
 import { SessionProvider } from "next-auth/react";
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+import MotivationOverlay from "./components/MotivationOverlay";
+
+const Providers = ({
+  children,
+  headers,
+}: {
+  children: React.ReactNode;
+  headers: HeadersInit;
+}) => {
   return (
-    <TRPCReactProvider>
+    <TRPCReactProvider headers={headers}>
       <SessionProvider>
         {children}
+        <MotivationOverlay />
         <Toaster />
       </SessionProvider>
     </TRPCReactProvider>

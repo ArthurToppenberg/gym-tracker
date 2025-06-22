@@ -3,6 +3,7 @@ import "@gym/ui/styles/globals.css";
 import { type Metadata } from "next";
 
 import Providers from "./providers";
+import { headers } from "next/headers";
 import MotivationOverlay from "./components/MotivationOverlay";
 
 export const metadata: Metadata = {
@@ -11,16 +12,15 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const heads = new Headers(await headers());
+
   return (
     <html lang="en">
       <body>
-        <Providers>
-          {children}
-          <MotivationOverlay />
-        </Providers>
+        <Providers headers={heads}>{children}</Providers>
       </body>
     </html>
   );
