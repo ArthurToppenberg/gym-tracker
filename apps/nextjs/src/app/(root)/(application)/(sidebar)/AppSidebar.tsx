@@ -16,8 +16,8 @@ import { auth } from "@gym/trpc/auth";
 
 const items = [
   {
-    title: "Dashboard",
-    url: ".",
+    title: "Overview",
+    url: "/overview",
     icon: LayoutDashboard,
   },
   {
