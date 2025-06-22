@@ -6,7 +6,8 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
     <TRPCReactProvider>
       <SessionProvider>
-        {children}
+        {/* {children} */}
+        <p>hello</p>
         <Toaster />
       </SessionProvider>
     </TRPCReactProvider>
