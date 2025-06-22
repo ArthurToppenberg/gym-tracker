@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { api } from "@gym/trpc/server";
+import { api, HydrateClient } from "@gym/trpc/server";
 import RecordPage from "./recordPage";
 
 const Page = async () => {
@@ -14,7 +14,11 @@ const Page = async () => {
 
   const todaysDay = dayjs().format("dddd");
 
-  return <RecordPage todaysDay={todaysDay} />;
+  return (
+    <HydrateClient>
+      <RecordPage todaysDay={todaysDay} />
+    </HydrateClient>
+  );
 };
 
 export default Page;
