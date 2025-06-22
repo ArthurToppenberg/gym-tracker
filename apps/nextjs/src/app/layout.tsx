@@ -4,7 +4,6 @@ import { type Metadata } from "next";
 
 import Providers from "./providers";
 import MotivationOverlay from "./components/MotivationOverlay";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Gym Tracker",
@@ -20,7 +19,6 @@ export default function RootLayout({
       <body>
         <Providers>{children}</Providers>
         <MotivationOverlay />
-        <SpeedInsights />
       </body>
     </html>
   );
