@@ -18,11 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>
-          {children}
-          <MotivationOverlay />
-          <SpeedInsights />
-        </Providers>
+        <Providers>{children}</Providers>
+        <MotivationOverlay />
+        <SpeedInsights />
       </body>
     </html>
   );

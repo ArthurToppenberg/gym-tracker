@@ -14,28 +14,6 @@ export const createExerciseHandler = async ({
     });
   }
 
-  if (input.id) {
-    const exercise = await ctx.db.exercise.update({
-      where: {
-        id: input.id,
-      },
-      data: {
-        ...input,
-      },
-      select: {
-        id: true,
-      },
-    });
-
-    if (!exercise.id) {
-      throw new Error("Failed to update exercise");
-    }
-
-    return {
-      id: exercise.id,
-    };
-  }
-
   const similarExercises = await getExerciseSimilarity(input.name);
 
   const duplicateExercises = similarExercises.filter(
@@ -64,12 +42,12 @@ export const createExerciseHandler = async ({
     throw new Error(`Exercise with name ${input.name} already exists.`);
   }
 
-  const capitalizedName =
-    input.name.charAt(0).toUpperCase() + input.name.slice(1);
+  const capitalizedVariation =
+    input.variation.charAt(0).toUpperCase() + input.variation.slice(1);
 
   const response = await ctx.db.exercise.create({
     data: {
-      name: capitalizedName,
+      name: input.name,
       variation: input.variation,
       createdBy: { connect: { id: ctx.session.user.id } },
     },
