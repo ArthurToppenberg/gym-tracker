@@ -16,6 +16,9 @@ const ExercisePage = () => {
         onExerciseDeleted={() => {
           void getExercisesQuerry.refetch();
         }}
+        onExerciseEdited={() => {
+          void getExercisesQuerry.refetch();
+        }}
       />
       {session?.data?.user?.role === "ADMIN" && (
         <ExercisesCreate

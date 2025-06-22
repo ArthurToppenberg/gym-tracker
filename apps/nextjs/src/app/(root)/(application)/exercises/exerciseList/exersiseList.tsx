@@ -23,6 +23,9 @@ import SettingsDialog from "./SettingsDialog";
 import { useState } from "react";
 import { api } from "@gym/trpc/react";
 import { toast } from "@gym/ui/components/sonner";
+import EditExerciseDialog from "./EditExerciseDialog";
+import type { ExerciseFormValues } from "../components/ExerciseForm";
+import type { ExerciseVariation } from "../exerciseCreate/types";
 
 interface ExerciseListProps {
   exercises: inferRouterOutputs<AppRouter>["exercises"]["getExercises"]["items"];
@@ -36,11 +39,13 @@ export const ExerciseList = ({
   onExerciseEdited,
 }: ExerciseListProps) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState<
     ExerciseListProps["exercises"][number] | null
   >(null);
 
   const deleteExerciseMutation = api.exercises.deleteExercise.useMutation();
+  const updateExerciseMutation = api.exercises.createExercise.useMutation();
 
   const handleSettingsClick = (
     exercise: ExerciseListProps["exercises"][number],
@@ -52,7 +57,7 @@ export const ExerciseList = ({
   const handleEdit = () => {
     if (selectedExercise) {
       setSettingsOpen(false);
-      onExerciseEdited?.();
+      setEditOpen(true);
     }
   };
 
@@ -74,6 +79,27 @@ export const ExerciseList = ({
         },
       );
     }
+  };
+
+  const handleUpdate = (values: ExerciseFormValues) => {
+    updateExerciseMutation.mutate(
+      {
+        ...values,
+        id: selectedExercise?.id,
+        variation: values.variation as ExerciseVariation,
+      },
+      {
+        onSuccess: () => {
+          toast.success(`Updated ${values.name}`);
+          onExerciseEdited?.();
+          setEditOpen(false);
+          setSelectedExercise(null);
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      },
+    );
   };
 
   return (
@@ -129,6 +155,19 @@ export const ExerciseList = ({
             onEdit={handleEdit}
             onDelete={handleDelete}
             exercise={selectedExercise}
+          />
+        )}
+        {selectedExercise && (
+          <EditExerciseDialog
+            open={editOpen}
+            onOpenChange={setEditOpen}
+            exercise={selectedExercise}
+            onSubmit={handleUpdate}
+            onCancel={() => {
+              setEditOpen(false);
+              setSelectedExercise(null);
+            }}
+            isPending={updateExerciseMutation.isPending}
           />
         )}
       </CardContent>
