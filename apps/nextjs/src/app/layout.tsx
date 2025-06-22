@@ -19,7 +19,7 @@ export default function RootLayout({
       <body>
         <Providers>
           {children}
-          <MotivationOverlay />
+          {/* <MotivationOverlay /> */}
         </Providers>
       </body>
     </html>
