@@ -3,7 +3,6 @@
 import OverviewGrid from "./components/OverviewGrid";
 import Section from "./components/Section";
 import ExersisesPerWeek from "./stats/exersisesPerWeek";
-import dayjs from "dayjs";
 import PieChartLable from "./components/charts/PieChartLable";
 
 interface OverviewPageProps {

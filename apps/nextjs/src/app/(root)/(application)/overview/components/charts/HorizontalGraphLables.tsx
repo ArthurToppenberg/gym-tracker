@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock, TrendingUp } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -24,10 +24,8 @@ import ChartContainer from "./components/ChartContainer";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@gym/ui/components/card";
 
 export interface HorizontalGraphLablesProps {

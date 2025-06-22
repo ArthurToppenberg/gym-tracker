@@ -1,23 +1,9 @@
 "use client";
 
-import { SidebarUser } from "./(sidebar)/SidebarUser";
-import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Home = () => {
-  const session = useSession();
-  const user = session.data?.user;
-
-  return (
-    <div className="flex h-screen flex-col items-center justify-center px-[50%]">
-      <SidebarUser
-        user={{
-          name: user?.name ?? "",
-          email: user?.email ?? "",
-          avatar: user?.image ?? "",
-        }}
-      />
-    </div>
-  );
+  return redirect("/overview");
 };
 
 export default Home;
