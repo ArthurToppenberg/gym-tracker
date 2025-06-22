@@ -83,7 +83,7 @@ export const ExerciseForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues ?? {
       name: "",
-      variation: (variations?.[0] as ExerciseVariation) ?? "CABLE",
+      variation: variations?.[0] ?? "CABLE",
     },
     mode: "onChange",
   });
@@ -92,7 +92,10 @@ export const ExerciseForm = ({
     if (initialValues) {
       form.reset(initialValues);
     } else if (variations && variations.length > 0) {
-      form.reset();
+      form.reset({
+        name: form.getValues().name,
+        variation: variations[0],
+      });
     }
   }, [initialValues, form, variations]);
 
@@ -100,7 +103,10 @@ export const ExerciseForm = ({
     if (initialValues) {
       form.reset(initialValues);
     } else if (variations && variations.length > 0) {
-      form.reset();
+      form.reset({
+        name: "",
+        variation: variations[0],
+      });
     }
   }
 
@@ -146,17 +152,12 @@ export const ExerciseForm = ({
                       <SelectValue placeholder="Select a variation" />
                     </SelectTrigger>
                     <SelectContent>
-                      {variationsQuery.data?.variations.map(
-                        (variation: ExerciseVariation) => (
-                          <SelectItem key={variation} value={variation}>
-                            {variation.charAt(0) +
-                              variation
-                                .slice(1)
-                                .toLowerCase()
-                                .replace("_", " ")}
-                          </SelectItem>
-                        ),
-                      )}
+                      {variations?.map((variation: ExerciseVariation) => (
+                        <SelectItem key={variation} value={variation}>
+                          {variation.charAt(0) +
+                            variation.slice(1).toLowerCase().replace("_", " ")}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 )}
@@ -171,7 +172,7 @@ export const ExerciseForm = ({
               type="button"
               variant="outline"
               onClick={onCancel}
-              disabled={isPending || disabled}
+              disabled={isPending ?? disabled}
             >
               {cancelLabel}
             </Button>
@@ -180,7 +181,7 @@ export const ExerciseForm = ({
             type="button"
             variant="secondary"
             onClick={handleReset}
-            disabled={isPending || disabled}
+            disabled={isPending ?? disabled}
             className={onCancel ? "" : "col-start-2"}
           >
             Reset
@@ -188,9 +189,9 @@ export const ExerciseForm = ({
           <Button
             type="submit"
             disabled={
-              isPending ||
-              disabled ||
-              !form.formState.isDirty ||
+              isPending ??
+              disabled ??
+              !form.formState.isDirty ??
               !form.formState.isValid
             }
           >

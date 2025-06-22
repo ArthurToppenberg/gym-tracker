@@ -25,7 +25,7 @@ import { api } from "@gym/trpc/react";
 import { toast } from "@gym/ui/components/sonner";
 import EditExerciseDialog from "./EditExerciseDialog";
 import type { ExerciseFormValues } from "../components/ExerciseForm";
-import { ExerciseVariation } from "@gym/db";
+import type { ExerciseVariation } from "../exerciseCreate/types";
 
 interface ExerciseListProps {
   exercises: inferRouterOutputs<AppRouter>["exercises"]["getExercises"]["items"];
