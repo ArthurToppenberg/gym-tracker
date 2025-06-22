@@ -6,9 +6,11 @@ import ExersisesPerWeek from "./stats/exersisesPerWeek";
 import dayjs from "dayjs";
 import PieChartLable from "./components/charts/PieChartLable";
 
-const OverviewPage = () => {
-  const date = dayjs().endOf("day").toDate();
+interface OverviewPageProps {
+  date: Date;
+}
 
+const OverviewPage = ({ date }: OverviewPageProps) => {
   return (
     <>
       <Section

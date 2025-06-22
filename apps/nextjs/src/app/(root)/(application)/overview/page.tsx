@@ -12,7 +12,7 @@ const Page = async () => {
 
   return (
     <HydrateClient>
-      <OverviewPage />
+      <OverviewPage date={date} />
     </HydrateClient>
   );
 };
