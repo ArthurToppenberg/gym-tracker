@@ -1,16 +1,17 @@
-import HorizontalGraphLables from "./components/HorizontalGraphLables";
-import OverviewGrid from "./overviewGrid";
+import HorizontalGraphLables from "./components/charts/HorizontalGraphLables";
+import OverviewGrid from "./components/OverviewGrid";
+import Section from "./components/Section";
 
 const OverviewPage = () => {
   return (
     <>
-      <HorizontalGraphLables />
-      <HorizontalGraphLables />
-      <HorizontalGraphLables />
-      <HorizontalGraphLables />
-      <HorizontalGraphLables />
-      <HorizontalGraphLables />
-      <HorizontalGraphLables />
+      <Section
+        title="General"
+        description="Information about your gym progress"
+      />
+      <OverviewGrid>
+        <HorizontalGraphLables />
+      </OverviewGrid>
     </>
   );
 };
