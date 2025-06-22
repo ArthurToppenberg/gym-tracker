@@ -3,12 +3,12 @@ import OverviewPage from "./overviewPage";
 import dayjs from "dayjs";
 
 const Page = async () => {
-  const date = dayjs().endOf("day").toDate();
+  // const date = dayjs().endOf("day").toDate();
 
-  await api.record.getRecords.prefetch({
-    startDate: dayjs(date).subtract(7, "day").toISOString(),
-    endDate: dayjs(date).toISOString(),
-  });
+  // await api.record.getRecords.prefetch({
+  //   startDate: dayjs(date).subtract(7, "day").toISOString(),
+  //   endDate: dayjs(date).toISOString(),
+  // });
 
   return (
     // <HydrateClient>
