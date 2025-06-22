@@ -1,6 +1,6 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
+import { Clock, TrendingUp } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -24,6 +24,8 @@ import {
   ChartTooltipContent,
 } from "@gym/ui/components/chart";
 import type { ChartConfig } from "@gym/ui/components/chart";
+import { useMemo } from "react";
+import dayjs from "dayjs";
 
 export const description = "A bar chart with a custom label";
 
@@ -50,12 +52,51 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const HorizontalGraphLables = () => {
+interface HorizontalGraphLablesProps {
+  title: string;
+  description: string;
+  data: {
+    date: Date;
+    name: string;
+    value: number;
+  }[];
+}
+
+const HorizontalGraphLables = ({
+  title,
+  description,
+  data,
+}: HorizontalGraphLablesProps) => {
+  const { startWeekDay, endWeekDay } = useMemo(() => {
+    if (!data || data.length === 0) {
+      return { startWeekDay: null, endWeekDay: null };
+    }
+
+    const dates = data.map((item) => dayjs(item.date));
+    const startDate = dates.reduce((min, date) =>
+      date.isBefore(min) ? date : min,
+    );
+    const endDate = dates.reduce((max, date) =>
+      date.isAfter(max) ? date : max,
+    );
+
+    return {
+      startWeekDay: startDate.format("ddd D"),
+      endWeekDay: endDate.format("ddd D"),
+    };
+  }, [data]);
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Bar Chart - Custom Label</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle className="flex flex-row items-center gap-2">
+          {title}
+          <span className="text-muted-foreground flex flex-row items-center gap-1 text-xs">
+            <Clock className="h-3 w-3" />
+            {startWeekDay && endWeekDay && `${startWeekDay} - ${endWeekDay}`}
+          </span>
+        </CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
