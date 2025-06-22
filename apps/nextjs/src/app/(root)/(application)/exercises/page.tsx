@@ -6,9 +6,10 @@ const ExercisesPage = async () => {
   void (await api.exercises.getExerciseVariations.prefetch({}));
 
   return (
-    <HydrateClient>
-      <ExercisePage />
-    </HydrateClient>
+    // <HydrateClient>
+    //   <ExercisePage />
+    // </HydrateClient>
+    <p>Hello</p>
   );
 };
 
