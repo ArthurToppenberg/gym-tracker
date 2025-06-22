@@ -15,7 +15,7 @@ interface ExercisePerWeek {
 const ExersisesPerWeek = ({ date }: ExercisePerWeek) => {
   const weekRecords = api.record.getRecords.useQuery({
     startDate: dayjs(date).subtract(7, "day").toISOString(),
-    endDate: dayjs(date).endOf("day").toISOString(),
+    endDate: dayjs(date).toISOString(),
   });
 
   const exercisesByDay: HorizontalGraphLablesProps["data"] = useMemo(() => {
