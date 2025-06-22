@@ -1,5 +1,4 @@
 import { auth } from "@gym/trpc/auth";
-import { HydrateClient } from "@gym/trpc/server";
 import { redirect } from "next/navigation";
 import ApplicationGrid from "./ApplicationGrid";
 
@@ -14,11 +13,7 @@ const ApplicationLayout = async ({
     redirect("/auth/signin");
   }
 
-  return (
-    <HydrateClient>
-      <ApplicationGrid>{children}</ApplicationGrid>
-    </HydrateClient>
-  );
+  return <ApplicationGrid>{children}</ApplicationGrid>;
 };
 
 export default ApplicationLayout;
