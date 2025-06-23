@@ -11,17 +11,14 @@ import { Button } from "@gym/ui/components/button";
 import { Cog, Pencil, Trash } from "lucide-react";
 import { Badge } from "@gym/ui/components/badge";
 import { useSession } from "next-auth/react";
+import type { Exercise } from "./types";
 
 interface SettingsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onEdit: () => void;
   onDelete: () => void;
-  exercise: {
-    id: string;
-    name: string;
-    variation: string;
-  };
+  exercise: Exercise;
 }
 
 const SettingsDialog: React.FC<SettingsDialogProps> = ({
@@ -43,6 +40,14 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({
             <Badge variant="outline">{exercise.variation} </Badge>{" "}
           </DialogTitle>
         </DialogHeader>
+        <div className="flex flex-row gap-2">
+          <p className="text-muted-foreground text-sm">Muscle Groups:</p>
+          {exercise.muscleGroup.map((muscleGroup) => (
+            <Badge variant="outline" key={muscleGroup}>
+              {muscleGroup}
+            </Badge>
+          ))}
+        </div>
         <div className="flex flex-row justify-start gap-2">
           {isAdmin && (
             <>

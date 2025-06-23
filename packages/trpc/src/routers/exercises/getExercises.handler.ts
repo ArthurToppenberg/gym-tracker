@@ -40,6 +40,7 @@ export const getExercisesHandler = async ({
       id: true,
       name: true,
       variation: true,
+      muscleGroup: true,
       updatedAt: true,
     },
     take: limit,

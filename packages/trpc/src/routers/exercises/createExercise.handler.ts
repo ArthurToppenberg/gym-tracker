@@ -44,24 +44,22 @@ export const createExerciseHandler = async ({
 
   const filteredDuplicateExercises = duplicateExercises[0];
 
-  if (!filteredDuplicateExercises) {
-    throw new Error("Error when checking for duplicate exercises");
-  }
+  if (filteredDuplicateExercises) {
+    const exerciseVariation = await ctx.db.exercise.findFirst({
+      where: {
+        id: filteredDuplicateExercises.id.toString(),
+      },
+      select: {
+        variation: true,
+      },
+    });
 
-  const exerciseVariation = await ctx.db.exercise.findFirst({
-    where: {
-      id: filteredDuplicateExercises.id.toString(),
-    },
-    select: {
-      variation: true,
-    },
-  });
-
-  if (
-    duplicateExercises.length > 0 &&
-    exerciseVariation?.variation === input.variation
-  ) {
-    throw new Error(`Exercise with name ${input.name} already exists.`);
+    if (
+      duplicateExercises.length > 0 &&
+      exerciseVariation?.variation === input.variation
+    ) {
+      throw new Error(`Exercise with name ${input.name} already exists.`);
+    }
   }
 
   const capitalizedName =
@@ -72,6 +70,7 @@ export const createExerciseHandler = async ({
       name: capitalizedName,
       variation: input.variation,
       createdBy: { connect: { id: ctx.session.user.id } },
+      muscleGroup: input.muscleGroup,
     },
     select: {
       id: true,

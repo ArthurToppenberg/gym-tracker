@@ -1,0 +1,48 @@
+model Exercise {
+  id        String   @id @default(cuid())
+  name      String
+  variation   ExerciseVariation
+  muscleGroup ExerciseMuscleGroup[]
+
+  createdBy User @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  records Record[]
+
+  @@schema("public")
+}
+
+enum ExerciseVariation {
+  CABLE
+  BARBELL
+  DUMBBELL
+  MACHINE
+  BODYWEIGHT
+  ELASTIC_BAND
+  BAR
+
+  @@schema("public")
+}
+
+enum ExerciseMuscleGroup {
+  CHEST
+  UPPER_BACK
+  LOWER_BACK
+  LATS
+  SHOULDERS
+  TRAPS
+  BICEPS
+  TRICEPS
+  FOREARMS
+  QUADS
+  HAMSTRINGS
+  GLUTES
+  CALVES
+  ABS
+  OBLIQUES
+  CARDIO
+  FULL_BODY
+
+  @@schema("public")
+}

@@ -25,7 +25,10 @@ import { api } from "@gym/trpc/react";
 import { toast } from "@gym/ui/components/sonner";
 import EditExerciseDialog from "./EditExerciseDialog";
 import type { ExerciseFormValues } from "../components/ExerciseForm";
-import type { ExerciseVariation } from "../exerciseCreate/types";
+import type {
+  ExerciseMuscleGroup,
+  ExerciseVariation,
+} from "../exerciseCreate/types";
 
 interface ExerciseListProps {
   exercises: inferRouterOutputs<AppRouter>["exercises"]["getExercises"]["items"];
@@ -87,6 +90,12 @@ export const ExerciseList = ({
         ...values,
         id: selectedExercise?.id,
         variation: values.variation as ExerciseVariation,
+        muscleGroup: [
+          values.primaryMuscleGroup as ExerciseMuscleGroup,
+          ...(values.secondaryMuscleGroup
+            ? [values.secondaryMuscleGroup as ExerciseMuscleGroup]
+            : []),
+        ],
       },
       {
         onSuccess: () => {

@@ -12,6 +12,7 @@ import { ExerciseCreatedDialog } from "./ExerciseCreatedDialog";
 import { SimilarExercisesDialog } from "./SimilarExercisesDialog";
 import { Dialog } from "@gym/ui/components/dialog";
 import type { ExerciseVariation } from "./types";
+import type { ExerciseMuscleGroup } from "./types";
 import {
   ExerciseForm,
   type ExerciseFormValues,
@@ -70,9 +71,18 @@ export const ExercisesCreate = ({
     if (!pendingExercise || !similarQuery.isSuccess) return;
     const similar = similarQuery.data?.similarExersises || [];
     if (similar.length === 0) {
+      const muscleGroup = [pendingExercise.primaryMuscleGroup];
+      if (
+        pendingExercise.secondaryMuscleGroup &&
+        pendingExercise.secondaryMuscleGroup !==
+          pendingExercise.primaryMuscleGroup
+      ) {
+        muscleGroup.push(pendingExercise.secondaryMuscleGroup);
+      }
       createExercise({
         ...pendingExercise,
         variation: pendingExercise.variation as ExerciseVariation,
+        muscleGroup: muscleGroup as ExerciseMuscleGroup[],
       });
       setPendingExercise(null);
     } else if (similar.length > 0) {
@@ -94,9 +104,18 @@ export const ExercisesCreate = ({
 
   function handleConfirmCreate() {
     if (pendingExercise) {
+      const muscleGroup = [pendingExercise.primaryMuscleGroup];
+      if (
+        pendingExercise.secondaryMuscleGroup &&
+        pendingExercise.secondaryMuscleGroup !==
+          pendingExercise.primaryMuscleGroup
+      ) {
+        muscleGroup.push(pendingExercise.secondaryMuscleGroup);
+      }
       createExercise({
         ...pendingExercise,
         variation: pendingExercise.variation as ExerciseVariation,
+        muscleGroup: muscleGroup as ExerciseMuscleGroup[],
       });
       setPendingExercise(null);
     }

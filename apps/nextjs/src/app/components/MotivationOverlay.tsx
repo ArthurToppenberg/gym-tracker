@@ -11,7 +11,9 @@ const MotivationOverlay = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      keysPressed.current[e.key.toLowerCase()] = true;
+      if (typeof e.key !== "string") return;
+      const key = e.key.toLowerCase();
+      keysPressed.current[key] = true;
       if (keysPressed.current.m && keysPressed.current.o) {
         showTimeout.current ??= setTimeout(() => {
           if (keysPressed.current.m && keysPressed.current.o) {
@@ -29,7 +31,9 @@ const MotivationOverlay = () => {
       }
     };
     const handleKeyUp = (e: KeyboardEvent) => {
-      keysPressed.current[e.key.toLowerCase()] = false;
+      if (typeof e.key !== "string") return;
+      const key = e.key.toLowerCase();
+      keysPressed.current[key] = false;
       if (!keysPressed.current.m || !keysPressed.current.o) {
         setVisible(false);
         if (showTimeout.current) {

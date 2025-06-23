@@ -41,7 +41,7 @@ const ExersisesPerWeek = ({ date }: ExercisePerWeek) => {
 
   return (
     <HorizontalGraphLables
-      title="Exercises per Week"
+      title="Exercises this Week"
       description={`${exercisesByDay.reduce((acc, item) => acc + item.value, 0)} exercises in the past 7 days`}
       valueLabel="Exercises"
       data={exercisesByDay}

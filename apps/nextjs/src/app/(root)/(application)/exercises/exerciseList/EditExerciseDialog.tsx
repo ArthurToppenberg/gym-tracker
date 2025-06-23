@@ -43,6 +43,8 @@ const EditExerciseDialog: React.FC<EditExerciseDialogProps> = ({
             id: exercise.id,
             name: exercise.name,
             variation: exercise.variation,
+            primaryMuscleGroup: exercise.muscleGroup[0],
+            secondaryMuscleGroup: exercise.muscleGroup[1],
           }}
           onSubmit={onSubmit}
           onCancel={onCancel}
