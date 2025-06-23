@@ -4,7 +4,6 @@ import { auth } from "@gym/trpc/auth";
 import { HydrateClient } from "@gym/trpc/server";
 import { redirect } from "next/navigation";
 import ApplicationGrid from "./ApplicationGrid";
-import { db } from "@gym/db";
 
 const ApplicationLayout = async ({
   children,
@@ -17,22 +16,22 @@ const ApplicationLayout = async ({
     redirect("/auth/signin");
   }
 
-  try {
-    const user = await db.user.findUnique({
-      where: {
-        id: session.user.id,
-      },
-      select: {
-        id: true,
-      },
-    });
+  // try {
+  //   const user = await db.user.findUnique({
+  //     where: {
+  //       id: session.user.id,
+  //     },
+  //     select: {
+  //       id: true,
+  //     },
+  //   });
 
-    if (!user) {
-      redirect("/auth/signin");
-    }
-  } catch {
-    redirect("/auth/signin");
-  }
+  //   if (!user) {
+  //     redirect("/auth/signin");
+  //   }
+  // } catch {
+  //   redirect("/auth/signin");
+  // }
 
   return (
     <HydrateClient>
