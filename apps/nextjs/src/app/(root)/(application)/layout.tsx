@@ -30,7 +30,7 @@ const ApplicationLayout = async ({
     if (!user) {
       redirect("/auth/signin");
     }
-  } catch (error) {
+  } catch {
     redirect("/auth/signin");
   }
 
