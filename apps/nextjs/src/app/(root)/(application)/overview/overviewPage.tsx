@@ -3,7 +3,7 @@
 import OverviewGrid from "./components/OverviewGrid";
 import Section from "./components/Section";
 import ExersisesPerWeek from "./stats/exersisesPerWeek";
-import PieChartLable from "./components/charts/PieChartLable";
+import MuscleGroupsPerWeek from "./stats/muscleGroupsPerWeek";
 
 interface OverviewPageProps {
   date: Date;
@@ -18,7 +18,7 @@ const OverviewPage = ({ date }: OverviewPageProps) => {
       />
       <OverviewGrid>
         <ExersisesPerWeek date={date} />
-        <PieChartLable />
+        <MuscleGroupsPerWeek date={date} />
       </OverviewGrid>
     </>
   );

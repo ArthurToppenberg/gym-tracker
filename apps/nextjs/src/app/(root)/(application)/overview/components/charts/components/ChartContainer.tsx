@@ -17,7 +17,6 @@ export interface ChartContainerProps {
   startDate?: string;
   endDate?: string;
   footer?: React.ReactNode;
-  variant?: "default" | "pie";
 }
 
 const ChartContainer = ({
@@ -27,14 +26,13 @@ const ChartContainer = ({
   startDate,
   endDate,
   footer,
-  variant = "default",
 }: ChartContainerProps) => {
   const startWeekDay = startDate ? dayjs(startDate).format("ddd D") : null;
   const endWeekDay = endDate ? dayjs(endDate).format("ddd D") : null;
 
   return (
-    <Card className={cn({ "flex flex-col": variant === "pie" })}>
-      <CardHeader className={cn({ "items-center pb-0": variant === "pie" })}>
+    <Card>
+      <CardHeader>
         <CardTitle className="flex flex-col gap-2 sm:flex-row sm:items-center">
           {title}
           {startWeekDay && endWeekDay && (
@@ -46,17 +44,9 @@ const ChartContainer = ({
         </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className={cn({ "flex-1 pb-0": variant === "pie" })}>
-        {children}
-      </CardContent>
+      <CardContent>{children}</CardContent>
       {footer && (
-        <CardFooter
-          className={cn("flex-col gap-2 text-sm", {
-            "items-start": variant === "default",
-          })}
-        >
-          {footer}
-        </CardFooter>
+        <CardFooter className="flex-col gap-2 text-sm">{footer}</CardFooter>
       )}
     </Card>
   );
