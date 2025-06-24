@@ -11,26 +11,15 @@ dayjs.extend(utc);
 
 const Page = async () => {
   const session = await auth();
-  if (!session?.user.id) {
-    return <div>No user found</div>;
-  }
-  const userTimezone = await db.user.findUnique({
-    where: {
-      id: session.user.id,
-    },
-    select: {
-      timezone: true,
-    },
-  });
-  if (!userTimezone) {
+  if (!session?.user.timezone) {
     return <div>No timezone found</div>;
   }
   const startDate = dayjs()
-    .tz(userTimezone.timezone)
+    .tz(session.user.timezone)
     .subtract(7, "day")
     .startOf("day")
     .toDate();
-  const endDate = dayjs().tz(userTimezone.timezone).endOf("day").toDate();
+  const endDate = dayjs().tz(session.user.timezone).endOf("day").toDate();
 
   await api.record.getRecords.prefetch({
     startDate: dayjs(startDate).toISOString(),
