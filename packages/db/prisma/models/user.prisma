@@ -14,5 +14,6 @@ model User {
     exercises     Exercise[]
     records       Record[]
     role          Role      @default(USER)
+    timezone      String   @default("UTC")
     @@schema("public")
 }

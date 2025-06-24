@@ -25,6 +25,7 @@ const signUpSchema = z.object({
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters" }),
+  timezone: z.string().min(1),
 });
 
 type SignUpValues = z.infer<typeof signUpSchema>;
@@ -34,12 +35,19 @@ export const SignUpForm = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const detectedTimezone =
+    typeof window !== "undefined" &&
+    Intl?.DateTimeFormat?.().resolvedOptions().timeZone
+      ? Intl.DateTimeFormat().resolvedOptions().timeZone
+      : "UTC";
+
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: "",
       email: "",
       password: "",
+      timezone: detectedTimezone,
     },
   });
 
@@ -52,7 +60,7 @@ export const SignUpForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, timezone: detectedTimezone }),
       });
       if (!response.ok) {
         let data: unknown = {};

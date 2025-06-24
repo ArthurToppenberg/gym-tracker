@@ -15,11 +15,13 @@ declare module "next-auth" {
     user: {
       id: string;
       role: Role;
+      timezone?: string;
     } & DefaultSession["user"];
   }
 
   interface User {
     role: Role;
+    timezone?: string;
   }
 }
 
@@ -55,6 +57,7 @@ export const authConfig = {
             image: true,
             password: true,
             role: true,
+            timezone: true,
           },
         });
 
@@ -74,6 +77,7 @@ export const authConfig = {
           name: user.name,
           image: user.image,
           role: user.role,
+          timezone: user.timezone,
         };
       },
     }),
@@ -91,6 +95,9 @@ export const authConfig = {
       if (user && user.role) {
         token.role = user.role;
       }
+      if (user && user.timezone) {
+        token.timezone = user.timezone;
+      }
       return token;
     },
     session: ({ session, token }) => {
@@ -100,6 +107,7 @@ export const authConfig = {
           ...session.user,
           id: token.sub as string,
           role: token.role as Role,
+          timezone: token.timezone as string,
         },
       };
     },
