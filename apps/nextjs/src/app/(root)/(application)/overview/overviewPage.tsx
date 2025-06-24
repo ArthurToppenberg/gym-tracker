@@ -2,14 +2,15 @@
 
 import OverviewGrid from "./components/OverviewGrid";
 import Section from "./components/Section";
-import ExersisesPerWeek from "./stats/exersisesPerWeek";
-import MuscleGroupsPerWeek from "./stats/muscleGroupsPerWeek";
+import ExersisesHorizontalBarChart from "./stats/exersisesHorizontalBarChart";
+import MuscleGroupsPieChart from "./stats/muscleGroupsPieChart";
 
 interface OverviewPageProps {
-  date: Date;
+  startDate: Date;
+  endDate: Date;
 }
 
-const OverviewPage = ({ date }: OverviewPageProps) => {
+const OverviewPage = ({ startDate, endDate }: OverviewPageProps) => {
   return (
     <>
       <Section
@@ -17,8 +18,10 @@ const OverviewPage = ({ date }: OverviewPageProps) => {
         description="Information about your gym progress"
       />
       <OverviewGrid>
-        <ExersisesPerWeek date={date} />
-        <MuscleGroupsPerWeek date={date} />
+        <p>startDate: {startDate.toISOString()} </p>
+        <p>endDate: {endDate.toISOString()} </p>
+        <ExersisesHorizontalBarChart startDate={startDate} endDate={endDate} />
+        <MuscleGroupsPieChart startDate={startDate} endDate={endDate} />
       </OverviewGrid>
     </>
   );
