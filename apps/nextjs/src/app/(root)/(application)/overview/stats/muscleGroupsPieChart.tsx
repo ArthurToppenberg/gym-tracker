@@ -1,5 +1,8 @@
 import dayjs from "dayjs";
 import PieChartLable from "../components/charts/PieChartLable";
+import { api } from "@gym/trpc/react";
+import { getDayCount, getDifferentMuscleGroups } from "./utils";
+import type { Records } from "./types";
 
 interface MuscleGroupsPieChartProps {
   startDate: Date;
@@ -10,47 +13,24 @@ const MuscleGroupsPieChart = ({
   startDate,
   endDate,
 }: MuscleGroupsPieChartProps) => {
+  const records = api.record.getRecords.useQuery({
+    startDate: dayjs(startDate).toISOString(),
+    endDate: dayjs(endDate).toISOString(),
+  });
+  const muscleGroups = getDifferentMuscleGroups(records.data ?? []);
+  const muscleGroupValues = Object.values(muscleGroups);
+  const dayCount = getDayCount(startDate, endDate);
   return (
     <PieChartLable
-      title={"Muscle Groups this week"}
-      description={""}
-      data={[
-        {
-          name: "Chest",
-          value: 15,
-          date: dayjs(endDate).subtract(6, "day").toDate(),
-        },
-        {
-          name: "Back",
-          value: 8,
-          date: dayjs(endDate).subtract(5, "day").toDate(),
-        },
-        {
-          name: "Legs",
-          value: 19,
-          date: dayjs(endDate).subtract(4, "day").toDate(),
-        },
-        {
-          name: "Shoulders",
-          value: 12,
-          date: dayjs(endDate).subtract(3, "day").toDate(),
-        },
-        {
-          name: "Biceps",
-          value: 6,
-          date: dayjs(endDate).subtract(2, "day").toDate(),
-        },
-        {
-          name: "Triceps",
-          value: 14,
-          date: dayjs(endDate).subtract(1, "day").toDate(),
-        },
-        {
-          name: "Forearms",
-          value: 3,
-          date: dayjs(endDate).toDate(),
-        },
-      ]}
+      title={"Muscle Groups"}
+      description={`${muscleGroupValues.reduce((acc: number, value: Records) => acc + value.length, 0)} different muscle groups in the past ${dayCount} days`}
+      data={Object.entries(muscleGroups).map(([name, value]) => ({
+        name,
+        value: value.length,
+      }))}
+      startDate={startDate}
+      endDate={endDate}
+      isLoading={records.isLoading}
     />
   );
 };

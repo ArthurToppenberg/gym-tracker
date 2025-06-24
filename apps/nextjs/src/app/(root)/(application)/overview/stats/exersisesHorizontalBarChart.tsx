@@ -5,7 +5,7 @@ import HorizontalGraphLables, {
   type HorizontalGraphLablesProps,
 } from "../components/charts/HorizontalGraphLables";
 import { api } from "@gym/trpc/react";
-import { groupRecordsByDay } from "./utils";
+import { getDayCount, groupRecordsByDay } from "./utils";
 import { useMemo } from "react";
 
 interface ExersisesHorizontalBarChartProps {
@@ -22,7 +22,7 @@ const ExersisesHorizontalBarChart = ({
     endDate: dayjs(endDate).toISOString(),
   });
 
-  console.log("weekRecords", JSON.stringify(weekRecords.data, null, 2));
+  const dayCount = getDayCount(startDate, endDate);
 
   const exercisesByDay: HorizontalGraphLablesProps["data"] = useMemo(() => {
     if (!weekRecords.data) return [];
@@ -54,10 +54,12 @@ const ExersisesHorizontalBarChart = ({
   return (
     <HorizontalGraphLables
       title="Exercises"
-      description={`${exercisesByDay.reduce((acc, item) => acc + item.value, 0)} exercises in the past 7 days`}
+      description={`${exercisesByDay.reduce((acc, item) => acc + item.value, 0)} exercises in the past ${dayCount} days`}
       valueLabel="Exercises"
       data={exercisesByDay}
       isLoading={weekRecords.isLoading}
+      startDate={startDate}
+      endDate={endDate}
     />
   );
 };

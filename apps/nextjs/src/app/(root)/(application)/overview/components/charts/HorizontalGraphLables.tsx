@@ -1,6 +1,5 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -19,14 +18,7 @@ import {
 import type { ChartConfig } from "@gym/ui/components/chart";
 import { useMemo } from "react";
 import dayjs from "dayjs";
-import { Skeleton } from "@gym/ui/components/skeleton";
 import ChartContainer from "./components/ChartContainer";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@gym/ui/components/card";
 
 export interface HorizontalGraphLablesProps {
   title: string;
@@ -37,15 +29,19 @@ export interface HorizontalGraphLablesProps {
     value: number;
   }[];
   valueLabel: string;
+  startDate: Date;
+  endDate: Date;
   isLoading?: boolean;
 }
 
 const HorizontalGraphLables = ({
+  isLoading,
   title,
   description,
   data,
   valueLabel,
-  isLoading,
+  startDate,
+  endDate,
 }: HorizontalGraphLablesProps) => {
   const chartConfig = {
     value: {
@@ -61,25 +57,6 @@ const HorizontalGraphLables = ({
     },
   } satisfies ChartConfig;
 
-  const { startDate, endDate } = useMemo(() => {
-    if (!data || data.length === 0) {
-      return { startDate: undefined, endDate: undefined };
-    }
-
-    const dates = data.map((item) => dayjs(item.date));
-    const minDate = dates.reduce((min, date) =>
-      date.isBefore(min) ? date : min,
-    );
-    const maxDate = dates.reduce((max, date) =>
-      date.isAfter(max) ? date : max,
-    );
-
-    return {
-      startDate: minDate.toISOString(),
-      endDate: maxDate.toISOString(),
-    };
-  }, [data]);
-
   const chartData = useMemo(() => {
     return data.map((item) => ({
       day: dayjs(item.date).format("ddd"),
@@ -89,48 +66,13 @@ const HorizontalGraphLables = ({
     }));
   }, [data]);
 
-  if (isLoading) {
-    return (
-      <Card>
-        <CardHeader>
-          <Skeleton className="h-7 w-1/2" />
-          <Skeleton className="h-4 w-3/4" />
-        </CardHeader>
-        <CardContent>
-          <div className="flex h-[250px] w-full flex-col gap-4">
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-            <Skeleton className="h-8 w-full" />
-          </div>
-        </CardContent>
-        <CardFooter className="flex-col items-start gap-2 text-sm">
-          <Skeleton className="h-4 w-1/3" />
-          <Skeleton className="h-4 w-1/2" />
-        </CardFooter>
-      </Card>
-    );
-  }
-
-  const footer = (
-    <>
-      <div className="flex gap-2 leading-none font-medium">
-        Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-      </div>
-      <div className="text-muted-foreground leading-none">
-        Showing total visitors for the last 6 months
-      </div>
-    </>
-  );
-
   return (
     <ChartContainer
       title={title}
       description={description}
-      startDate={startDate}
-      endDate={endDate}
-      footer={footer}
+      startDate={dayjs(startDate).toISOString()}
+      endDate={dayjs(endDate).toISOString()}
+      isLoading={isLoading}
     >
       <Chart config={chartConfig}>
         <BarChart

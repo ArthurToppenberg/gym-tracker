@@ -19,6 +19,7 @@ export const getRecordsHandler = async ({
         select: {
           name: true,
           variation: true,
+          muscleGroup: true,
         },
       },
       sets: true,

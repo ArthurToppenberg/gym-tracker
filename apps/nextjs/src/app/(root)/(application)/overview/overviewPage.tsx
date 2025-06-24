@@ -18,8 +18,6 @@ const OverviewPage = ({ startDate, endDate }: OverviewPageProps) => {
         description="Information about your gym progress"
       />
       <OverviewGrid>
-        <p>startDate: {startDate.toISOString()} </p>
-        <p>endDate: {endDate.toISOString()} </p>
         <ExersisesHorizontalBarChart startDate={startDate} endDate={endDate} />
         <MuscleGroupsPieChart startDate={startDate} endDate={endDate} />
       </OverviewGrid>

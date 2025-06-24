@@ -38,4 +38,30 @@ const groupRecordsByDay = (records: Records): Record<string, Records> => {
   );
 };
 
-export { groupRecordsByDay };
+/**
+ * Get the different muscle groups from the records
+ * @param records - The records to get the muscle groups from
+ * @returns record <muscleGroup, Array of records with that muscle group>
+ */
+const getDifferentMuscleGroups = (
+  records: Records,
+): Record<string, Records> => {
+  return records.reduce(
+    (acc, record) => {
+      if (Array.isArray(record.exercise.muscleGroup)) {
+        record.exercise.muscleGroup.forEach((group) => {
+          acc[group] ??= [];
+          acc[group].push(record);
+        });
+      }
+      return acc;
+    },
+    {} as Record<string, Records>,
+  );
+};
+
+const getDayCount = (startDate: Date, endDate: Date): number => {
+  return dayjs(endDate).diff(dayjs(startDate), "day") + 1;
+};
+
+export { groupRecordsByDay, getDifferentMuscleGroups, getDayCount };

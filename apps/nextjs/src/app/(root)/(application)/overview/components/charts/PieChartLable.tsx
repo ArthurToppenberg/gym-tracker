@@ -1,6 +1,5 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Pie, PieChart } from "recharts";
 import { useMemo } from "react";
 import { LabelList } from "recharts";
@@ -21,14 +20,23 @@ export const description = "A pie chart with a label";
 export interface PieChartLabelProps {
   title: string;
   description: string;
+  startDate: Date;
+  endDate: Date;
   data: {
     name: string;
     value: number;
-    date: Date;
   }[];
+  isLoading?: boolean;
 }
 
-const PieChartLable = ({ title, description, data }: PieChartLabelProps) => {
+const PieChartLable = ({
+  title,
+  description,
+  data,
+  startDate,
+  endDate,
+  isLoading,
+}: PieChartLabelProps) => {
   const chartData = useMemo(
     () =>
       data.map((item, idx) => ({
@@ -56,36 +64,6 @@ const PieChartLable = ({ title, description, data }: PieChartLabelProps) => {
     [data],
   ) as ChartConfig;
 
-  const footer = (
-    <>
-      <div className="flex items-center gap-2 leading-none font-medium">
-        Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-      </div>
-      <div className="text-muted-foreground leading-none">
-        Showing total visitors for the last 6 months
-      </div>
-    </>
-  );
-
-  const { startDate, endDate } = useMemo(() => {
-    if (!data || data.length === 0) {
-      return { startDate: undefined, endDate: undefined };
-    }
-
-    const dates = data.map((item) => dayjs(item.date));
-    const minDate = dates.reduce((min, date) =>
-      date.isBefore(min) ? date : min,
-    );
-    const maxDate = dates.reduce((max, date) =>
-      date.isAfter(max) ? date : max,
-    );
-
-    return {
-      startDate: minDate.toISOString(),
-      endDate: maxDate.toISOString(),
-    };
-  }, [data]);
-
   // Find the largest 3 sections by value
   const top3Browsers = useMemo(() => {
     return chartData
@@ -99,9 +77,9 @@ const PieChartLable = ({ title, description, data }: PieChartLabelProps) => {
     <ChartContainer
       title={title}
       description={description}
-      footer={footer}
-      startDate={startDate}
-      endDate={endDate}
+      startDate={dayjs(startDate).toISOString()}
+      endDate={dayjs(endDate).toISOString()}
+      isLoading={isLoading}
     >
       <Chart
         config={chartConfig}
