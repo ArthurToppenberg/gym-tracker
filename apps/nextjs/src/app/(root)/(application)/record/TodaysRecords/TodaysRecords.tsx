@@ -115,8 +115,17 @@ const TodaysRecords = ({ onDelete, todaysRecords }: TodaysRecordsProps) => {
                     <div className="flex items-center justify-start gap-2">
                       <Badge variant="secondary">{index + 1}</Badge>{" "}
                       {exercise.exercise.name}{" "}
-                      <Badge variant="outline">
+                      <Badge
+                        variant="secondary"
+                        className="px-1 py-0.5 text-[10px]"
+                      >
                         {exercise.exercise.variation}
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="px-1 py-0.5 text-[10px]"
+                      >
+                        {exercise.exercise.muscleGroup[0]}
                       </Badge>
                     </div>
                   </div>
