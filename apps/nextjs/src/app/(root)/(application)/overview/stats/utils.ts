@@ -38,30 +38,31 @@ const groupRecordsByDay = (records: Records): Record<string, Records> => {
   );
 };
 
-/**
- * Get the different muscle groups from the records
- * @param records - The records to get the muscle groups from
- * @returns record <muscleGroup, Array of records with that muscle group>
- */
-const getDifferentMuscleGroups = (
-  records: Records,
-): Record<string, Records> => {
-  return records.reduce(
-    (acc, record) => {
-      if (Array.isArray(record.exercise.muscleGroup)) {
-        record.exercise.muscleGroup.forEach((group) => {
-          acc[group] ??= [];
-          acc[group].push(record);
-        });
-      }
-      return acc;
-    },
-    {} as Record<string, Records>,
-  );
-};
-
 const getDayCount = (startDate: Date, endDate: Date): number => {
   return dayjs(endDate).diff(dayjs(startDate), "day") + 1;
 };
 
-export { groupRecordsByDay, getDifferentMuscleGroups, getDayCount };
+/**
+ * Count muscle groups with custom weighting:
+ * - First value in the muscle groups array in each exercise counts as 1
+ * - All others count as 0.5
+ * @param records - The records to count muscle groups from
+ * @returns Record<string, number> where key is muscle group and value is weighted count
+ */
+const getWeightedMuscleGroupCounts = (
+  records: Records,
+): Record<string, number> => {
+  const counts: Record<string, number> = {};
+  records.forEach((record) => {
+    const groups = record.exercise.muscleGroup;
+    if (Array.isArray(groups) && groups.length > 0) {
+      groups.forEach((group, idx) => {
+        counts[group] ??= 0;
+        counts[group] += idx === 0 ? 1 : 0.5;
+      });
+    }
+  });
+  return counts;
+};
+
+export { groupRecordsByDay, getDayCount, getWeightedMuscleGroupCounts };
