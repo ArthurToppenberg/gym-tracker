@@ -17,15 +17,18 @@ import dayjs from "dayjs";
 
 export const description = "A pie chart with a label";
 
+interface DataItem {
+  name: string;
+  value: number;
+  metadata?: string[];
+}
+
 export interface PieChartLabelProps {
   title: string;
   description: string;
   startDate: Date;
   endDate: Date;
-  data: {
-    name: string;
-    value: number;
-  }[];
+  data: DataItem[];
   isLoading?: boolean;
 }
 
@@ -43,6 +46,7 @@ const PieChartLable = ({
         browser: item.name,
         visitors: item.value,
         fill: `var(--chart-${(idx % 5) + 1})`,
+        metadata: item.metadata ?? [],
       })),
     [data],
   );
@@ -54,12 +58,16 @@ const PieChartLable = ({
           acc[item.name] = {
             label: item.name,
             color: `var(--chart-${(idx % 5) + 1})`,
+            metadata: item.metadata ?? [],
           };
           return acc;
         },
         {
           visitors: { label: "Visitors" },
-        } as Record<string, { label: string; color?: string }>,
+        } as Record<
+          string,
+          { label: string; color?: string; metadata?: string[] }
+        >,
       ),
     [data],
   ) as ChartConfig;

@@ -22,9 +22,18 @@ const MuscleGroupsPieChart = ({
     <PieChartLable
       title={"Muscle Groups"}
       description={`${Object.keys(weightedMuscleGroups).length} muscle groups in the past ${dayCount} days`}
-      data={Object.entries(weightedMuscleGroups).map(([name, value]) => ({
+      data={Object.entries(weightedMuscleGroups).map(([name, recs]) => ({
         name,
-        value,
+        value: recs.length,
+        metadata: recs.map((record) => {
+          const recordDate = dayjs(record.createdAt);
+          const today = dayjs().format("YYYY-MM-DD");
+          const dayLable =
+            recordDate.format("YYYY-MM-DD") === today
+              ? "Today"
+              : recordDate.format("dddd");
+          return `${dayLable} (${recordDate.format("MMM D")}) - ${record.exercise.name}`;
+        }),
       }))}
       startDate={startDate}
       endDate={endDate}
