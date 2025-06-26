@@ -29,6 +29,7 @@ import type {
   ExerciseMuscleGroup,
   ExerciseVariation,
 } from "../exerciseCreate/types";
+import { Badge } from "@gym/ui/components/badge";
 
 interface ExerciseListProps {
   exercises: inferRouterOutputs<AppRouter>["exercises"]["getExercises"]["items"];
@@ -122,7 +123,6 @@ export const ExerciseList = ({
             <TableHeader className="bg-background">
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead>Variation</TableHead>
                 <TableHead className="flex items-center justify-center">
                   <Cog size={16} />
                 </TableHead>
@@ -132,10 +132,22 @@ export const ExerciseList = ({
               {exercises?.length ? (
                 exercises.map((exercise) => (
                   <TableRow key={exercise.id}>
-                    <TableCell className="font-medium">
+                    <TableCell>
                       {exercise.name}
+                      <Badge
+                        variant="secondary"
+                        className="ml-2 px-1 py-0.5 text-[10px]"
+                      >
+                        {exercise.variation}
+                      </Badge>
+                      <Badge
+                        variant="outline"
+                        className="ml-2 px-1 py-0.5 text-[10px]"
+                      >
+                        {exercise.muscleGroup[0]}
+                      </Badge>
                     </TableCell>
-                    <TableCell>{exercise.variation || "-"}</TableCell>
+
                     <TableCell className="flex items-center justify-center">
                       <Button
                         variant="ghost"
