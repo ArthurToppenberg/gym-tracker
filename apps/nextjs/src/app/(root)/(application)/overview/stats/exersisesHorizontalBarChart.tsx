@@ -47,6 +47,7 @@ const ExersisesHorizontalBarChart = ({
         date: day,
         name: "", // TODO: integrate the schedule into this to show the type of day
         value: records.length,
+        metadata: records.map((record) => record.exercise.name),
       };
     });
   }, [startDate, endDate, weekRecords.data]);

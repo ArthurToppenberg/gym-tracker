@@ -20,14 +20,20 @@ import { useMemo } from "react";
 import dayjs from "dayjs";
 import ChartContainer from "./components/ChartContainer";
 
+/**
+ * metadata is shown in chadcn badges
+ */
+interface DataItem {
+  date: Date;
+  name: string;
+  value: number;
+  metadata?: string[];
+}
+
 export interface HorizontalGraphLablesProps {
   title: string;
   description: string;
-  data: {
-    date: Date;
-    name: string;
-    value: number;
-  }[];
+  data: DataItem[];
   valueLabel: string;
   startDate: Date;
   endDate: Date;
@@ -63,6 +69,7 @@ const HorizontalGraphLables = ({
       date: item.date,
       name: item.name,
       value: item.value,
+      metadata: item.metadata ?? [],
     }));
   }, [data]);
 

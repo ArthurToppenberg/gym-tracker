@@ -4,6 +4,7 @@ import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
 import { cn } from "../lib/utils";
+import { Badge } from "./badge";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
@@ -220,23 +221,41 @@ function ChartTooltipContent({
                       />
                     )
                   )}
-                  <div
-                    className={cn(
-                      "flex flex-1 justify-between leading-none",
-                      nestLabel ? "items-end" : "items-center"
-                    )}
-                  >
-                    <div className="grid gap-1.5">
-                      {nestLabel ? tooltipLabel : null}
-                      <span className="text-muted-foreground">
-                        {itemConfig?.label || item.name}
-                      </span>
+                  <div className="flex flex-col w-full">
+                    <div
+                      className={cn(
+                        "flex flex-1 justify-between leading-none",
+                        nestLabel ? "items-end" : "items-center"
+                      )}
+                    >
+                      <div className="grid gap-1.5">
+                        {nestLabel ? tooltipLabel : null}
+                        <span className="text-muted-foreground">
+                          {itemConfig?.label || item.name}
+                        </span>
+                      </div>
+                      {item.value && (
+                        <span className="text-foreground font-mono font-medium tabular-nums">
+                          {item.value.toLocaleString()}
+                        </span>
+                      )}
                     </div>
-                    {item.value && (
-                      <span className="text-foreground font-mono font-medium tabular-nums">
-                        {item.value.toLocaleString()}
-                      </span>
-                    )}
+                    {Array.isArray(item.payload?.metadata) &&
+                      item.payload.metadata.length > 0 && (
+                        <div className="flex flex-col gap-1 mt-1">
+                          {item.payload.metadata.map(
+                            (meta: string, idx: number) => (
+                              <Badge
+                                variant="outline"
+                                key={idx}
+                                className="text-[10px]"
+                              >
+                                {meta}
+                              </Badge>
+                            )
+                          )}
+                        </div>
+                      )}
                   </div>
                 </>
               )}
