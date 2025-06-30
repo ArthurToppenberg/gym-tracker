@@ -37,7 +37,7 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({
           <DialogTitle className="flex items-center gap-2">
             <Cog size={16} />
             {exercise.name}{" "}
-            <Badge variant="outline">{exercise.variation} </Badge>{" "}
+            <Badge variant="secondary">{exercise.variation} </Badge>{" "}
           </DialogTitle>
         </DialogHeader>
         <div className="flex flex-row gap-2">
